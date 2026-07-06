@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>메뉴 추가 - 카페 관리자</title>
+    <link rel="stylesheet" href="../../css/variables.css" />
+    <link rel="stylesheet" href="create.css" />
+  </head>
+  <body>
+    <header class="admin-header">
+      <div class="container admin-header__inner">
+        <a class="admin-header__brand" href="../index.html">☕ 카페 관리자</a>
+        <nav class="admin-nav">
+          <a href="../index.html">대시보드</a>
+          <a href="list.html" class="is-active">메뉴 관리</a>
+          <a href="../orders/list.html">주문 관리</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container admin-main">
+      <a class="back-link" href="list.html">← 메뉴 목록으로</a>
+      <h1>메뉴 추가</h1>
+
+      <form id="menu-form" class="menu-form glass-card">
+        <label class="menu-form__field">
+          <span>메뉴명 *</span>
+          <input type="text" name="name" required />
+        </label>
+
+        <label class="menu-form__field">
+          <span>영문명</span>
+          <input type="text" name="englishName" />
+        </label>
+
+        <label class="menu-form__field">
+          <span>카테고리 *</span>
+          <select name="categoryId" id="category-select" required></select>
+        </label>
+
+        <label class="menu-form__field">
+          <span>가격 (원) *</span>
+          <input type="number" name="price" min="0" step="100" required />
+        </label>
+
+        <label class="menu-form__field">
+          <span>이미지 URL</span>
+          <input type="url" name="image" placeholder="https://..." />
+        </label>
+
+        <label class="menu-form__field">
+          <span>설명</span>
+          <textarea name="description" rows="3"></textarea>
+        </label>
+
+        <label class="menu-form__field">
+          <span>태그 (쉼표로 구분)</span>
+          <input type="text" name="tags" placeholder="best, hot, iced" />
+        </label>
+
+        <fieldset class="menu-form__fieldset">
+          <legend>온도 옵션</legend>
+          <label><input type="checkbox" name="temperature" value="hot" /> HOT</label>
+          <label><input type="checkbox" name="temperature" value="iced" /> ICED</label>
+          <label><input type="checkbox" name="temperature" value="room" /> 상온</label>
+        </fieldset>
+
+        <fieldset class="menu-form__fieldset">
+          <legend>사이즈 옵션</legend>
+          <label><input type="checkbox" name="sizes" value="regular" /> Regular</label>
+          <label><input type="checkbox" name="sizes" value="large" /> Large</label>
+          <label><input type="checkbox" name="sizes" value="single" /> Single</label>
+        </fieldset>
+
+        <div class="menu-form__row">
+          <label class="menu-form__checkbox">
+            <input type="checkbox" name="isRecommended" /> 추천 메뉴로 등록
+          </label>
+          <label class="menu-form__checkbox">
+            <input type="checkbox" name="isSoldOut" /> 품절 처리
+          </label>
+        </div>
+
+        <div class="menu-form__actions">
+          <a class="btn btn--ghost" href="list.html">취소</a>
+          <button type="submit" class="btn btn--primary">메뉴 추가</button>
+        </div>
+      </form>
+    </main>
+
+    <script src="../../js/data.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="create.js"></script>
+  </body>
+</html>

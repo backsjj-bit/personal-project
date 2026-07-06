@@ -1,6 +1,7 @@
 (function () {
   const CART_STORAGE_KEY = "newCafeCart";
   const ORDER_STORAGE_KEY = "newCafeOrders";
+  const MENU_STORAGE_KEY = "newCafeMenus";
 
   function formatPrice(value) {
     return new Intl.NumberFormat("ko-KR", {
@@ -15,7 +16,7 @@
   }
 
   function findMenuById(menuId) {
-    return (window.CafeData?.menus || []).find((menu) => menu.id === menuId) || null;
+    return getMenus().find((menu) => menu.id === menuId) || null;
   }
 
   function findCategoryById(categoryId) {
@@ -23,12 +24,71 @@
   }
 
   function getMenusByCategory(categoryId) {
-    const menus = window.CafeData?.menus || [];
+    const menus = getMenus();
     if (!categoryId || categoryId === "all") {
       return menus;
     }
 
     return menus.filter((menu) => menu.categoryId === categoryId);
+  }
+
+  function getMenus() {
+    const storedMenus = readStorage(MENU_STORAGE_KEY, null);
+    if (storedMenus) {
+      return storedMenus;
+    }
+
+    const initialMenus = window.CafeData?.menus || [];
+    writeStorage(MENU_STORAGE_KEY, initialMenus);
+    return initialMenus;
+  }
+
+  function saveMenus(menus) {
+    writeStorage(MENU_STORAGE_KEY, menus);
+    return menus;
+  }
+
+  function generateMenuId(seedName) {
+    const base =
+      (seedName || "menu")
+        .toString()
+        .trim()
+        .toLowerCase()
+        .replace(/[^a-z0-9가-힣]+/g, "-")
+        .replace(/(^-+|-+$)/g, "") || "menu";
+
+    const existingIds = new Set(getMenus().map((menu) => menu.id));
+    let candidateId = base;
+    let suffix = 1;
+    while (existingIds.has(candidateId)) {
+      candidateId = `${base}-${suffix}`;
+      suffix += 1;
+    }
+
+    return candidateId;
+  }
+
+  function addMenu(menuData) {
+    const newMenu = {
+      ...menuData,
+      id: menuData.id || generateMenuId(menuData.englishName || menuData.name),
+    };
+
+    saveMenus([...getMenus(), newMenu]);
+    return newMenu;
+  }
+
+  function updateMenu(menuId, updates) {
+    const nextMenus = getMenus().map((menu) =>
+      menu.id === menuId ? { ...menu, ...updates, id: menu.id } : menu
+    );
+
+    saveMenus(nextMenus);
+    return nextMenus.find((menu) => menu.id === menuId) || null;
+  }
+
+  function deleteMenu(menuId) {
+    return saveMenus(getMenus().filter((menu) => menu.id !== menuId));
   }
 
   function readStorage(key, fallback) {
@@ -143,6 +203,12 @@
     findMenuById,
     findCategoryById,
     getMenusByCategory,
+    getMenus,
+    saveMenus,
+    generateMenuId,
+    addMenu,
+    updateMenu,
+    deleteMenu,
     getCart,
     saveCart,
     addToCart,

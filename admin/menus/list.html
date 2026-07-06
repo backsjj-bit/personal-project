@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>메뉴 관리 - 카페 관리자</title>
+    <link rel="stylesheet" href="../../css/variables.css" />
+    <link rel="stylesheet" href="list.css" />
+  </head>
+  <body>
+    <header class="admin-header">
+      <div class="container admin-header__inner">
+        <a class="admin-header__brand" href="../index.html">☕ 카페 관리자</a>
+        <nav class="admin-nav">
+          <a href="../index.html">대시보드</a>
+          <a href="list.html" class="is-active">메뉴 관리</a>
+          <a href="../orders/list.html">주문 관리</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container admin-main">
+      <div class="admin-page-header">
+        <div>
+          <h1>메뉴 관리</h1>
+          <p class="admin-page-header__desc">등록된 메뉴를 확인하고 관리하세요.</p>
+        </div>
+        <a class="btn btn--primary" href="create.html">+ 메뉴 추가</a>
+      </div>
+
+      <div class="admin-toolbar glass-card">
+        <label class="admin-toolbar__field">
+          <span>카테고리</span>
+          <select id="category-filter">
+            <option value="all">전체</option>
+          </select>
+        </label>
+        <label class="admin-toolbar__field admin-toolbar__field--grow">
+          <span>검색</span>
+          <input type="search" id="search-input" placeholder="메뉴명으로 검색" />
+        </label>
+      </div>
+
+      <div class="menu-table glass-card">
+        <div class="menu-table__head">
+          <span>이미지</span>
+          <span>메뉴명</span>
+          <span>카테고리</span>
+          <span>가격</span>
+          <span>상태</span>
+          <span>액션</span>
+        </div>
+        <div id="menu-list-body" class="menu-table__body"></div>
+        <p id="empty-message" class="menu-table__empty" hidden>등록된 메뉴가 없습니다.</p>
+      </div>
+    </main>
+
+    <script src="../../js/data.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="list.js"></script>
+  </body>
+</html>
