@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>New Cafe</title>
+    <link rel="stylesheet" href="./css/variables.css" />
+    <link rel="stylesheet" href="./index.css" />
+    <script src="./js/data.js" defer></script>
+    <script src="./js/utils.js" defer></script>
+    <script src="./index.js" defer></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">New Cafe</p>
+        <h1>오늘도, 커피 한 잔의 여유</h1>
+      </div>
+      <nav class="top-nav" aria-label="고객 메뉴">
+        <a aria-current="page" href="./index.html">홈</a>
+        <a href="./menus/list.html">메뉴</a>
+        <a href="./basket/list.html">장바구니</a>
+      </nav>
+    </header>
+
+    <main class="container home-page">
+      <section class="hero glass-card">
+        <div>
+          <p class="eyebrow">Cafe Menu</p>
+          <h2>매일 아침, 신선한 원두로 내린 커피</h2>
+          <p class="hero-copy">엄선된 원두와 신선한 재료로 만든 메뉴를 만나보세요.</p>
+        </div>
+        <a class="primary-button" href="./menus/list.html">메뉴 보러가기</a>
+      </section>
+
+      <section class="menu-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Recommended</p>
+            <h2>추천 메뉴</h2>
+          </div>
+          <a class="ghost-button" href="./menus/list.html">전체 메뉴 보기</a>
+        </div>
+        <div id="recommendedGrid" class="menu-grid" aria-live="polite"></div>
+      </section>
+
+      <section class="category-section">
+        <div class="section-heading">
+          <div>
+            <p class="eyebrow">Category</p>
+            <h2>카테고리</h2>
+          </div>
+        </div>
+        <div id="categoryList" class="category-list"></div>
+      </section>
+    </main>
+  </body>
+</html>
