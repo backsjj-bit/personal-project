@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>로그인 | New Cafe</title>
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="./login.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <a class="brand-link" href="../index.html">New Cafe</a>
+        <h1>로그인</h1>
+      </div>
+      <nav class="top-nav" aria-label="고객 메뉴">
+        <a href="../index.html">홈</a>
+      </nav>
+    </header>
+
+    <main class="container auth-page">
+      <form id="login-form" class="auth-card glass-card" novalidate>
+        <p id="error-message" class="error-message" hidden></p>
+
+        <label class="form-field">
+          <span>이메일</span>
+          <input id="email" type="email" autocomplete="email" required />
+        </label>
+
+        <label class="form-field">
+          <span>비밀번호</span>
+          <input id="password" type="password" autocomplete="current-password" required />
+        </label>
+
+        <button class="btn btn-primary" type="submit">로그인</button>
+
+        <p class="auth-switch">계정이 없으신가요? <a href="./signup.html">회원가입</a></p>
+      </form>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="./login.js"></script>
+  </body>
+</html>

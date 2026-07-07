@@ -23,41 +23,53 @@
     </header>
 
     <main class="container page">
-      <section class="page-heading">
-        <span id="tier-badge" class="count-badge">일반회원</span>
-      </section>
-
-      <section class="profile-card glass-card" aria-label="회원 정보">
-        <span id="profile-avatar" class="profile-avatar">C</span>
-        <div class="profile-info">
-          <p id="profile-name" class="profile-name">커피러버</p>
-          <p id="profile-desc" class="profile-desc">아직 주문 내역이 없어요.</p>
+      <section id="guest-view" class="guest-card glass-card" hidden>
+        <h2>로그인이 필요합니다</h2>
+        <p>마이페이지는 로그인 후 이용할 수 있어요.</p>
+        <div class="guest-actions">
+          <a class="btn btn-primary" href="../auth/login.html">로그인</a>
+          <a class="btn btn-ghost" href="../auth/signup.html">회원가입</a>
         </div>
       </section>
 
-      <section class="summary-grid" aria-label="주문 요약">
-        <article class="summary-card glass-card">
-          <span>전체 주문</span>
-          <strong id="total-orders">0건</strong>
-        </article>
-        <article class="summary-card glass-card">
-          <span>진행 중</span>
-          <strong id="active-orders">0건</strong>
-        </article>
-        <article class="summary-card glass-card">
-          <span>누적 결제금액</span>
-          <strong id="total-price">₩0</strong>
-        </article>
-      </section>
+      <div id="member-view" hidden>
+        <section class="page-heading">
+          <span id="tier-badge" class="count-badge">일반회원</span>
+        </section>
 
-      <section class="section-block">
-        <div class="section-heading">
-          <h2>최근 주문</h2>
-          <a class="ghost-link" href="../orders/list.html">전체 보기</a>
-        </div>
-        <div id="recent-orders" class="recent-orders" aria-live="polite"></div>
-        <p id="recent-empty" class="empty-state" hidden>아직 주문 내역이 없습니다.</p>
-      </section>
+        <section class="profile-card glass-card" aria-label="회원 정보">
+          <span id="profile-avatar" class="profile-avatar">C</span>
+          <div class="profile-info">
+            <p id="profile-name" class="profile-name">커피러버</p>
+            <p id="profile-desc" class="profile-desc">아직 주문 내역이 없어요.</p>
+          </div>
+          <button id="btn-logout" class="btn btn-ghost" type="button">로그아웃</button>
+        </section>
+
+        <section class="summary-grid" aria-label="주문 요약">
+          <article class="summary-card glass-card">
+            <span>전체 주문</span>
+            <strong id="total-orders">0건</strong>
+          </article>
+          <article class="summary-card glass-card">
+            <span>진행 중</span>
+            <strong id="active-orders">0건</strong>
+          </article>
+          <article class="summary-card glass-card">
+            <span>누적 결제금액</span>
+            <strong id="total-price">₩0</strong>
+          </article>
+        </section>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <h2>최근 주문</h2>
+            <a class="ghost-link" href="../orders/list.html">전체 보기</a>
+          </div>
+          <div id="recent-orders" class="recent-orders" aria-live="polite"></div>
+          <p id="recent-empty" class="empty-state" hidden>아직 주문 내역이 없습니다.</p>
+        </section>
+      </div>
     </main>
 
     <script src="../js/data.js"></script>

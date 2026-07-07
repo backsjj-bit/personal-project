@@ -2,6 +2,8 @@
   const CART_STORAGE_KEY = "newCafeCart";
   const ORDER_STORAGE_KEY = "newCafeOrders";
   const MENU_STORAGE_KEY = "newCafeMenus";
+  const USER_STORAGE_KEY = "newCafeUsers";
+  const SESSION_STORAGE_KEY = "newCafeSession";
 
   function formatPrice(value) {
     return new Intl.NumberFormat("ko-KR", {
@@ -195,6 +197,49 @@
     return order;
   }
 
+  function getUsers() {
+    return readStorage(USER_STORAGE_KEY, []);
+  }
+
+  function saveUsers(users) {
+    writeStorage(USER_STORAGE_KEY, users);
+    return users;
+  }
+
+  function findUserByEmail(email) {
+    return getUsers().find((user) => user.email === email) || null;
+  }
+
+  function registerUser({ name, email, password }) {
+    if (findUserByEmail(email)) {
+      return { success: false, message: "이미 가입된 이메일입니다." };
+    }
+
+    const user = { name, email, password };
+    saveUsers([...getUsers(), user]);
+    writeStorage(SESSION_STORAGE_KEY, email);
+    return { success: true, user };
+  }
+
+  function login(email, password) {
+    const user = findUserByEmail(email);
+    if (!user || user.password !== password) {
+      return { success: false, message: "이메일 또는 비밀번호가 올바르지 않습니다." };
+    }
+
+    writeStorage(SESSION_STORAGE_KEY, email);
+    return { success: true, user };
+  }
+
+  function logout() {
+    localStorage.removeItem(SESSION_STORAGE_KEY);
+  }
+
+  function getCurrentUser() {
+    const email = readStorage(SESSION_STORAGE_KEY, null);
+    return email ? findUserByEmail(email) : null;
+  }
+
   window.CafeUtils = Object.freeze({
     CART_STORAGE_KEY,
     ORDER_STORAGE_KEY,
@@ -219,5 +264,9 @@
     getOrders,
     saveOrders,
     createOrder,
+    registerUser,
+    login,
+    logout,
+    getCurrentUser,
   });
 })();

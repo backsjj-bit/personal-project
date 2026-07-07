@@ -1,4 +1,4 @@
-const { getOrders, formatPrice } = window.CafeUtils;
+const { getOrders, formatPrice, getCurrentUser, logout } = window.CafeUtils;
 
 const statusLabels = {
   pending: "접수 대기",
@@ -43,10 +43,12 @@ function getTierLabel(orderCount) {
   return tiers.find((tier) => orderCount >= tier.min).label;
 }
 
-function renderProfile(orders) {
+function renderProfile(user, orders) {
   const tierLabel = getTierLabel(orders.length);
 
   document.getElementById("tier-badge").textContent = tierLabel;
+  document.getElementById("profile-avatar").textContent = user.name.trim().charAt(0).toUpperCase();
+  document.getElementById("profile-name").textContent = user.name;
   document.getElementById("profile-desc").textContent =
     orders.length > 0 ? `지금까지 ${orders.length}건을 주문했어요.` : "아직 주문 내역이 없어요.";
 }
@@ -90,11 +92,28 @@ function renderRecentOrders(orders) {
 }
 
 function init() {
-  const orders = getOrders();
+  const user = getCurrentUser();
+  const guestView = document.getElementById("guest-view");
+  const memberView = document.getElementById("member-view");
 
-  renderProfile(orders);
+  if (!user) {
+    guestView.hidden = false;
+    memberView.hidden = true;
+    return;
+  }
+
+  guestView.hidden = true;
+  memberView.hidden = false;
+
+  const orders = getOrders();
+  renderProfile(user, orders);
   renderSummary(orders);
   renderRecentOrders(orders);
+
+  document.getElementById("btn-logout").addEventListener("click", () => {
+    logout();
+    window.location.href = "../auth/login.html";
+  });
 }
 
 init();
