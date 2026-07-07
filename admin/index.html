@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>대시보드 - 카페 관리자</title>
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="index.css" />
+  </head>
+  <body>
+    <header class="admin-header">
+      <div class="container admin-header__inner">
+        <a class="admin-header__brand" href="index.html">New Cafe 관리자</a>
+        <nav class="admin-nav">
+          <a href="index.html" class="is-active">대시보드</a>
+          <a href="menus/list.html">메뉴 관리</a>
+          <a href="orders/list.html">주문 관리</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container admin-main">
+      <div class="admin-page-header">
+        <div>
+          <h1>대시보드</h1>
+          <p class="admin-page-header__desc">오늘의 운영 상태와 최근 주문을 확인하세요.</p>
+        </div>
+        <div class="admin-page-header__actions">
+          <a class="btn btn--ghost" href="menus/list.html">메뉴 관리</a>
+          <a class="btn btn--primary" href="orders/list.html">주문 관리</a>
+        </div>
+      </div>
+
+      <section class="summary-grid" aria-label="운영 요약">
+        <article class="summary-card glass-card">
+          <span>전체 메뉴</span>
+          <strong id="menu-count">0개</strong>
+        </article>
+        <article class="summary-card glass-card">
+          <span>품절 메뉴</span>
+          <strong id="sold-out-count">0개</strong>
+        </article>
+        <article class="summary-card glass-card">
+          <span>전체 주문</span>
+          <strong id="order-count">0건</strong>
+        </article>
+        <article class="summary-card glass-card">
+          <span>진행 주문</span>
+          <strong id="active-order-count">0건</strong>
+        </article>
+        <article class="summary-card glass-card summary-card--wide">
+          <span>누적 매출</span>
+          <strong id="total-revenue">₩0</strong>
+        </article>
+      </section>
+
+      <section class="dashboard-section">
+        <div class="section-heading">
+          <div>
+            <h2>최근 주문</h2>
+            <p class="section-heading__desc">가장 최근 접수된 주문을 빠르게 확인하세요.</p>
+          </div>
+          <a class="btn btn--ghost btn--sm" href="orders/list.html">전체 보기</a>
+        </div>
+        <div id="recent-orders" class="order-list" aria-live="polite"></div>
+        <p id="empty-orders" class="empty-state glass-card" hidden>아직 접수된 주문이 없습니다.</p>
+      </section>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="index.js"></script>
+  </body>
+</html>

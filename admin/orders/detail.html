@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>메뉴 상세 - 카페 관리자</title>
+    <title>주문 상세 - 카페 관리자</title>
     <link rel="stylesheet" href="../../css/variables.css" />
     <link rel="stylesheet" href="detail.css" />
   </head>
@@ -13,17 +13,17 @@
         <a class="admin-header__brand" href="../index.html">New Cafe 관리자</a>
         <nav class="admin-nav">
           <a href="../index.html">대시보드</a>
-          <a href="list.html" class="is-active">메뉴 관리</a>
-          <a href="../orders/list.html">주문 관리</a>
+          <a href="../menus/list.html">메뉴 관리</a>
+          <a href="list.html" class="is-active">주문 관리</a>
         </nav>
       </div>
     </header>
 
     <main class="container admin-main">
-      <a class="back-link" href="list.html">← 메뉴 목록으로</a>
+      <a class="back-link" href="list.html">← 주문 목록으로</a>
 
-      <div id="menu-detail" class="menu-detail glass-card"></div>
-      <p id="not-found-message" class="empty-state" hidden>메뉴를 찾을 수 없습니다.</p>
+      <article id="order-detail" class="order-detail glass-card"></article>
+      <p id="not-found-message" class="empty-state" hidden>주문을 찾을 수 없습니다.</p>
     </main>
 
     <script src="../../js/data.js"></script>

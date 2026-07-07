@@ -19,6 +19,7 @@
 
 .admin-nav {
   display: flex;
+  flex-wrap: wrap;
   gap: var(--space-4);
 }
 
@@ -27,6 +28,7 @@
   font-size: var(--font-size-sm);
   padding-block: var(--space-1);
   border-bottom: 2px solid transparent;
+  white-space: nowrap;
 }
 
 .admin-nav a.is-active,
@@ -188,6 +190,12 @@
 }
 
 @media (max-width: 720px) {
+  .admin-header__inner,
+  .admin-nav {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
   .menu-detail {
     grid-template-columns: 1fr;
   }

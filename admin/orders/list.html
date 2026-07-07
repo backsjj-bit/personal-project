@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>주문 관리 - 카페 관리자</title>
+    <link rel="stylesheet" href="../../css/variables.css" />
+    <link rel="stylesheet" href="list.css" />
+  </head>
+  <body>
+    <header class="admin-header">
+      <div class="container admin-header__inner">
+        <a class="admin-header__brand" href="../index.html">New Cafe 관리자</a>
+        <nav class="admin-nav">
+          <a href="../index.html">대시보드</a>
+          <a href="../menus/list.html">메뉴 관리</a>
+          <a href="list.html" class="is-active">주문 관리</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container admin-main">
+      <div class="admin-page-header">
+        <div>
+          <h1>주문 관리</h1>
+          <p class="admin-page-header__desc">접수된 주문을 확인하고 처리 상태를 변경하세요.</p>
+        </div>
+      </div>
+
+      <section class="summary-grid" aria-label="주문 요약">
+        <article class="summary-card glass-card">
+          <span>전체 주문</span>
+          <strong id="total-orders">0건</strong>
+        </article>
+        <article class="summary-card glass-card">
+          <span>진행 주문</span>
+          <strong id="active-orders">0건</strong>
+        </article>
+        <article class="summary-card glass-card">
+          <span>완료 주문</span>
+          <strong id="completed-orders">0건</strong>
+        </article>
+        <article class="summary-card glass-card">
+          <span>누적 매출</span>
+          <strong id="total-revenue">₩0</strong>
+        </article>
+      </section>
+
+      <div class="admin-toolbar glass-card">
+        <label class="admin-toolbar__field">
+          <span>상태</span>
+          <select id="status-filter">
+            <option value="all">전체</option>
+            <option value="pending">접수 대기</option>
+            <option value="preparing">제조 중</option>
+            <option value="ready">픽업 가능</option>
+            <option value="completed">완료</option>
+            <option value="cancelled">취소</option>
+          </select>
+        </label>
+        <label class="admin-toolbar__field admin-toolbar__field--grow">
+          <span>검색</span>
+          <input id="search-input" type="search" placeholder="주문번호 또는 메뉴명 검색" />
+        </label>
+      </div>
+
+      <div class="order-table glass-card">
+        <div class="order-table__head">
+          <span>주문번호</span>
+          <span>주문일시</span>
+          <span>메뉴</span>
+          <span>금액</span>
+          <span>상태</span>
+          <span>액션</span>
+        </div>
+        <div id="order-list-body" class="order-table__body"></div>
+        <p id="empty-message" class="order-table__empty" hidden>조건에 맞는 주문이 없습니다.</p>
+      </div>
+    </main>
+
+    <script src="../../js/data.js"></script>
+    <script src="../../js/utils.js"></script>
+    <script src="list.js"></script>
+  </body>
+</html>
