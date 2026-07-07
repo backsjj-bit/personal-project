@@ -24,6 +24,22 @@
   text-transform: uppercase;
 }
 
+.brand-link {
+  display: inline-grid;
+  min-height: 1.75rem;
+  place-items: center;
+  margin: 0 0 var(--space-1);
+  color: var(--color-accent);
+  font-size: var(--font-size-xs);
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.brand-link:hover {
+  color: var(--color-primary);
+}
+
 .top-nav {
   display: flex;
   flex-wrap: wrap;
@@ -58,14 +74,8 @@
 .page-heading {
   display: flex;
   align-items: end;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: var(--space-4);
-}
-
-.page-heading h1 {
-  margin: 0;
-  font-size: clamp(var(--font-size-xl), 4vw, var(--font-size-2xl));
-  letter-spacing: 0;
 }
 
 .count-badge,
@@ -220,7 +230,6 @@
 
 @media (max-width: 760px) {
   .site-header,
-  .page-heading,
   .order-card-header,
   .order-card-footer {
     align-items: stretch;
