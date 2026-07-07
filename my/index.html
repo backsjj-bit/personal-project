@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>마이페이지 | New Cafe</title>
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="./index.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <p class="eyebrow">New Cafe</p>
+        <h1>마이페이지</h1>
+      </div>
+      <nav class="top-nav" aria-label="고객 메뉴">
+        <a href="../menus/list.html">메뉴</a>
+        <a href="../basket/list.html">장바구니</a>
+        <a href="../orders/list.html">주문내역</a>
+        <a aria-current="page" href="./index.html">마이페이지</a>
+      </nav>
+    </header>
+
+    <main class="container page">
+      <section class="page-heading">
+        <div>
+          <p class="eyebrow">My Page</p>
+          <h1>마이페이지</h1>
+        </div>
+        <span id="tier-badge" class="count-badge">일반회원</span>
+      </section>
+
+      <section class="profile-card glass-card" aria-label="회원 정보">
+        <span id="profile-avatar" class="profile-avatar">C</span>
+        <div class="profile-info">
+          <p id="profile-name" class="profile-name">커피러버</p>
+          <p id="profile-desc" class="profile-desc">아직 주문 내역이 없어요.</p>
+        </div>
+      </section>
+
+      <section class="summary-grid" aria-label="주문 요약">
+        <article class="summary-card glass-card">
+          <span>전체 주문</span>
+          <strong id="total-orders">0건</strong>
+        </article>
+        <article class="summary-card glass-card">
+          <span>진행 중</span>
+          <strong id="active-orders">0건</strong>
+        </article>
+        <article class="summary-card glass-card">
+          <span>누적 결제금액</span>
+          <strong id="total-price">₩0</strong>
+        </article>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <h2>최근 주문</h2>
+          <a class="ghost-link" href="../orders/list.html">전체 보기</a>
+        </div>
+        <div id="recent-orders" class="recent-orders" aria-live="polite"></div>
+        <p id="recent-empty" class="empty-state" hidden>아직 주문 내역이 없습니다.</p>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading">
+          <h2>바로가기</h2>
+        </div>
+        <div class="quick-links">
+          <a class="quick-link glass-card" href="../menus/list.html">
+            <span class="quick-link-title">메뉴 보러가기</span>
+            <p>오늘의 메뉴를 둘러보세요.</p>
+          </a>
+          <a class="quick-link glass-card" href="../basket/list.html">
+            <span class="quick-link-title">장바구니</span>
+            <p>담아둔 메뉴를 확인하세요.</p>
+          </a>
+          <a class="quick-link glass-card" href="../orders/list.html">
+            <span class="quick-link-title">주문내역</span>
+            <p>지난 주문을 확인하세요.</p>
+          </a>
+        </div>
+      </section>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="./index.js"></script>
+  </body>
+</html>
