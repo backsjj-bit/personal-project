@@ -15,6 +15,10 @@
   letter-spacing: 0;
 }
 
+.site-header h1 a:hover {
+  color: var(--color-primary);
+}
+
 .eyebrow {
   margin: 0 0 var(--space-1);
   color: var(--color-accent);
