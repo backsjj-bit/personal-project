@@ -18,6 +18,7 @@ window.addEventListener("DOMContentLoaded", () => {
       hot: "Hot",
       iced: "Iced",
       room: "Room",
+      frozen: "Frozen",
       regular: "Regular",
       large: "Large",
       single: "Single",
