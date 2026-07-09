@@ -1,22 +1,24 @@
+@import url("https://fonts.googleapis.com/css2?family=Jua&display=swap");
+
 :root {
   color-scheme: light;
 
-  --color-bg: #f8f5ef;
-  --color-surface: rgba(255, 255, 255, 0.78);
+  --color-bg: #fffce9;
+  --color-surface: rgba(255, 255, 250, 0.8);
   --color-surface-solid: #ffffff;
-  --color-primary: #6f4e37;
-  --color-primary-dark: #3f2b1f;
-  --color-primary-soft: #eadfd4;
-  --color-accent: #2f7d6d;
-  --color-accent-soft: #dff1ed;
-  --color-warning: #c87924;
+  --color-primary: #c79000;
+  --color-primary-dark: #8a6200;
+  --color-primary-soft: #fdf0b8;
+  --color-accent: #6b9b37;
+  --color-accent-soft: #e8f2d9;
+  --color-warning: #e0a100;
   --color-danger: #c94f4f;
-  --color-text: #24211f;
-  --color-text-muted: #736960;
-  --color-border: rgba(92, 74, 58, 0.18);
-  --color-shadow: rgba(63, 43, 31, 0.14);
+  --color-text: #2e2a14;
+  --color-text-muted: #7a7355;
+  --color-border: rgba(199, 144, 0, 0.22);
+  --color-shadow: rgba(120, 90, 10, 0.16);
 
-  --font-family-base: "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
+  --font-family-base: "Jua", "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -32,15 +34,15 @@
   --space-6: 2rem;
   --space-7: 3rem;
 
-  --radius-sm: 0.375rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 0.75rem;
+  --radius-sm: 0.75rem;
+  --radius-md: 1.1rem;
+  --radius-lg: 1.6rem;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 0.25rem 0.75rem var(--color-shadow);
-  --shadow-md: 0 0.75rem 2rem var(--color-shadow);
+  --shadow-sm: 0 0.4rem 1rem var(--color-shadow);
+  --shadow-md: 0 1rem 2.5rem var(--color-shadow);
   --container-width: 1120px;
-  --transition-base: 160ms ease;
+  --transition-base: 220ms cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
 *,

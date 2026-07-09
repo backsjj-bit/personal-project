@@ -90,8 +90,19 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-5);
+  gap: var(--space-6);
   padding: var(--space-7) var(--space-6);
+}
+
+.hero-text {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 30rem;
+}
+
+.hero-text .primary-button {
+  justify-self: start;
+  margin-top: var(--space-2);
 }
 
 .hero h2 {
@@ -102,6 +113,17 @@
 .hero-copy {
   margin: 0;
   color: var(--color-text-muted);
+}
+
+.hero-media {
+  flex-shrink: 0;
+  width: min(100%, 22rem);
+}
+
+.hero-media img {
+  width: 100%;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
 }
 
 .section-heading {
