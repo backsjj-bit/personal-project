@@ -3,20 +3,20 @@
 :root {
   color-scheme: light;
 
-  --color-bg: #fffce9;
-  --color-surface: rgba(255, 255, 250, 0.8);
+  --color-bg: #f8f2e2;
+  --color-surface: rgba(255, 253, 246, 0.8);
   --color-surface-solid: #ffffff;
-  --color-primary: #c79000;
-  --color-primary-dark: #8a6200;
-  --color-primary-soft: #fdf0b8;
-  --color-accent: #6b9b37;
-  --color-accent-soft: #e8f2d9;
-  --color-warning: #e0a100;
+  --color-primary: #46591f;
+  --color-primary-dark: #313f16;
+  --color-primary-soft: #e7ecd7;
+  --color-accent: #c79a2d;
+  --color-accent-soft: #fbeab0;
+  --color-warning: #d98f1c;
   --color-danger: #c94f4f;
-  --color-text: #2e2a14;
-  --color-text-muted: #7a7355;
-  --color-border: rgba(199, 144, 0, 0.22);
-  --color-shadow: rgba(120, 90, 10, 0.16);
+  --color-text: #2b2a1e;
+  --color-text-muted: #726c50;
+  --color-border: rgba(70, 89, 31, 0.2);
+  --color-shadow: rgba(43, 42, 30, 0.16);
 
   --font-family-base: "Jua", "Pretendard", "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", sans-serif;
   --font-size-xs: 0.75rem;

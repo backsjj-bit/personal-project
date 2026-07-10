@@ -9,14 +9,31 @@
   backdrop-filter: blur(18px);
 }
 
-.site-header h1 {
-  margin: 0;
-  font-size: clamp(var(--font-size-2xl), 4vw, 2.75rem);
-  letter-spacing: 0;
+.site-header > div {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
 }
 
-.site-header h1 a:hover {
-  color: var(--color-primary);
+.brand-logo {
+  width: 8.25rem;
+  height: 8.25rem;
+  border-radius: 50%;
+  object-fit: contain;
+  background: var(--color-primary-soft);
+}
+
+.brand-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-1);
+}
+
+.site-header h1 {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  letter-spacing: 0;
 }
 
 .eyebrow {
@@ -30,11 +47,11 @@
 
 .brand-link {
   display: inline-grid;
-  min-height: 1.75rem;
+  min-height: 3.75rem;
   place-items: center;
   margin: 0 0 var(--space-1);
   color: var(--color-accent);
-  font-size: var(--font-size-xs);
+  font-size: 2.25rem;
   font-weight: 800;
   letter-spacing: 0;
   text-transform: uppercase;

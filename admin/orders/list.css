@@ -17,6 +17,24 @@
   font-weight: 700;
 }
 
+.admin-header__brand-group {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.brand-logo {
+  border-radius: 50%;
+  object-fit: contain;
+  background: var(--color-primary-soft);
+}
+
+.brand-logo--admin {
+  width: 3.25rem;
+  height: 3.25rem;
+}
+
+
 .admin-nav {
   display: flex;
   flex-wrap: wrap;
