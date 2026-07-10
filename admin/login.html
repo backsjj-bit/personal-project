@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>관리자 로그인 | Lemon Joa</title>
+    <link rel="stylesheet" href="../css/variables.css" />
+    <link rel="stylesheet" href="../auth/login.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <div>
+        <a class="brand-link" href="../index.html">Lemon Joa</a>
+        <h1><a href="../index.html">관리자 로그인</a></h1>
+      </div>
+      <nav class="top-nav" aria-label="고객 메뉴">
+        <a href="../index.html">홈</a>
+      </nav>
+    </header>
+
+    <main class="container auth-page">
+      <form id="admin-login-form" class="auth-card glass-card" novalidate>
+        <p id="error-message" class="error-message" hidden></p>
+
+        <label class="form-field">
+          <span>아이디</span>
+          <input id="admin-id" type="text" autocomplete="username" required />
+        </label>
+
+        <label class="form-field">
+          <span>비밀번호</span>
+          <input id="admin-password" type="password" autocomplete="current-password" required />
+        </label>
+
+        <button class="btn btn-primary" type="submit">로그인</button>
+      </form>
+    </main>
+
+    <script src="../js/data.js"></script>
+    <script src="../js/utils.js"></script>
+    <script src="./login.js"></script>
+  </body>
+</html>

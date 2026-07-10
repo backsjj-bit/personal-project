@@ -1,4 +1,9 @@
 (function () {
+  if (!window.CafeUtils.isAdminLoggedIn()) {
+    window.location.href = "login.html";
+    return;
+  }
+
   const STATUS_LABELS = {
     pending: "접수 대기",
     preparing: "제조 중",

@@ -1,4 +1,9 @@
 (function () {
+  if (!window.CafeUtils.isAdminLoggedIn()) {
+    window.location.href = "../login.html";
+    return;
+  }
+
   const detailEl = document.getElementById("menu-detail");
   const notFoundEl = document.getElementById("not-found-message");
 

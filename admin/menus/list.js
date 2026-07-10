@@ -1,4 +1,9 @@
 (function () {
+  if (!window.CafeUtils.isAdminLoggedIn()) {
+    window.location.href = "../login.html";
+    return;
+  }
+
   const categoryFilterEl = document.getElementById("category-filter");
   const searchInputEl = document.getElementById("search-input");
   const listBodyEl = document.getElementById("menu-list-body");

@@ -280,6 +280,21 @@
   text-align: center;
 }
 
+.site-footer {
+  display: flex;
+  justify-content: flex-end;
+  padding: var(--space-4) clamp(1rem, 5vw, 3.5rem) var(--space-6);
+}
+
+.admin-link {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-xs);
+}
+
+.admin-link:hover {
+  color: var(--color-primary);
+}
+
 @media (max-width: 900px) {
   .site-header,
   .section-heading,

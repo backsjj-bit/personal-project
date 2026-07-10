@@ -1,4 +1,9 @@
 (function () {
+  if (!window.CafeUtils.isAdminLoggedIn()) {
+    window.location.href = "../login.html";
+    return;
+  }
+
   const formEl = document.getElementById("menu-form");
   const categorySelectEl = document.getElementById("category-select");
   const notFoundEl = document.getElementById("not-found-message");

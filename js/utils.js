@@ -4,6 +4,9 @@
   const MENU_STORAGE_KEY = "newCafeMenusV7";
   const USER_STORAGE_KEY = "newCafeUsers";
   const SESSION_STORAGE_KEY = "newCafeSession";
+  const ADMIN_ID = "damon";
+  const ADMIN_PASSWORD = "9802";
+  const ADMIN_SESSION_KEY = "newCafeAdminSession";
 
   function formatPrice(value) {
     return new Intl.NumberFormat("ko-KR", {
@@ -240,6 +243,23 @@
     return email ? findUserByEmail(email) : null;
   }
 
+  function adminLogin(id, password) {
+    if (id !== ADMIN_ID || password !== ADMIN_PASSWORD) {
+      return { success: false, message: "아이디 또는 비밀번호가 올바르지 않습니다." };
+    }
+
+    sessionStorage.setItem(ADMIN_SESSION_KEY, "true");
+    return { success: true };
+  }
+
+  function isAdminLoggedIn() {
+    return sessionStorage.getItem(ADMIN_SESSION_KEY) === "true";
+  }
+
+  function adminLogout() {
+    sessionStorage.removeItem(ADMIN_SESSION_KEY);
+  }
+
   window.CafeUtils = Object.freeze({
     CART_STORAGE_KEY,
     ORDER_STORAGE_KEY,
@@ -268,5 +288,8 @@
     login,
     logout,
     getCurrentUser,
+    adminLogin,
+    isAdminLoggedIn,
+    adminLogout,
   });
 })();
