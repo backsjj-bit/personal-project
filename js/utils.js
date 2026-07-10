@@ -1,7 +1,7 @@
 (function () {
   const CART_STORAGE_KEY = "newCafeCart";
   const ORDER_STORAGE_KEY = "newCafeOrders";
-  const MENU_STORAGE_KEY = "newCafeMenusV6";
+  const MENU_STORAGE_KEY = "newCafeMenusV7";
   const USER_STORAGE_KEY = "newCafeUsers";
   const SESSION_STORAGE_KEY = "newCafeSession";
 
