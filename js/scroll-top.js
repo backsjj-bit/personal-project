@@ -13,7 +13,7 @@
     }
 
     button.addEventListener("click", () => {
-      window.scrollTo({ top: 0, behavior: "auto" });
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
 
     window.addEventListener("scroll", toggleVisibility);
