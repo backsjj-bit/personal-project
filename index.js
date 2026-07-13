@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", () => {
   }
 
   function renderRecommended() {
-    const recommended = CafeData.menus.filter((menu) => menu.isRecommended);
+    const recommended = CafeUtils.getMenus().filter((menu) => menu.isRecommended);
 
     if (recommended.length === 0) {
       recommendedGrid.innerHTML = '<p class="empty-state">추천 메뉴가 없습니다.</p>';
@@ -36,7 +36,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     <h3>${escapeHtml(menu.name)}</h3>
                     <p>${escapeHtml(menu.englishName)}</p>
                   </div>
-                  <span class="price">${CafeUtils.formatPrice(menu.price)}</span>
+                  <span class="price">${CafeUtils.formatPriceRange(menu)}</span>
                 </div>
                 <p class="menu-description">${escapeHtml(menu.description)}</p>
                 <div class="tag-row">
