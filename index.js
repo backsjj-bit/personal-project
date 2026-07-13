@@ -103,9 +103,16 @@ window.addEventListener("DOMContentLoaded", () => {
     const prevButton = document.querySelector("#heroPrev");
     const nextButton = document.querySelector("#heroNext");
     const dots = Array.from(document.querySelectorAll(".hero-carousel__dot"));
+    const slideCount = track ? track.children.length : 0;
+    const AUTOPLAY_INTERVAL = 7000;
+    let autoplayTimer = null;
 
-    if (!track) {
+    if (!track || !slideCount) {
       return;
+    }
+
+    function getCurrentIndex() {
+      return Math.round(track.scrollLeft / track.clientWidth);
     }
 
     function goToSlide(index) {
@@ -114,28 +121,46 @@ window.addEventListener("DOMContentLoaded", () => {
     }
 
     function updateActiveDot() {
-      const index = Math.round(track.scrollLeft / track.clientWidth);
+      const index = getCurrentIndex();
       dots.forEach((dot, dotIndex) => dot.classList.toggle("is-active", dotIndex === index));
     }
 
+    function startAutoplay() {
+      stopAutoplay();
+      autoplayTimer = window.setInterval(() => {
+        goToSlide((getCurrentIndex() + 1) % slideCount);
+      }, AUTOPLAY_INTERVAL);
+    }
+
+    function stopAutoplay() {
+      if (autoplayTimer) {
+        window.clearInterval(autoplayTimer);
+        autoplayTimer = null;
+      }
+    }
+
     prevButton?.addEventListener("click", () => {
-      const index = Math.max(0, Math.round(track.scrollLeft / track.clientWidth) - 1);
-      goToSlide(index);
+      goToSlide((getCurrentIndex() - 1 + slideCount) % slideCount);
+      startAutoplay();
     });
 
     nextButton?.addEventListener("click", () => {
-      const maxIndex = track.children.length - 1;
-      const index = Math.min(maxIndex, Math.round(track.scrollLeft / track.clientWidth) + 1);
-      goToSlide(index);
+      goToSlide((getCurrentIndex() + 1) % slideCount);
+      startAutoplay();
     });
 
     dots.forEach((dot) => {
-      dot.addEventListener("click", () => goToSlide(Number(dot.dataset.slide)));
+      dot.addEventListener("click", () => {
+        goToSlide(Number(dot.dataset.slide));
+        startAutoplay();
+      });
     });
 
     track.addEventListener("scroll", () => {
       window.requestAnimationFrame(updateActiveDot);
     });
+
+    startAutoplay();
   }
 
   renderRecommended();
