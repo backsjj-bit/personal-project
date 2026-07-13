@@ -43,11 +43,6 @@
         </label>
 
         <label class="menu-form__field">
-          <span>가격 (원) *</span>
-          <input type="number" name="price" min="0" step="100" required />
-        </label>
-
-        <label class="menu-form__field">
           <span>이미지 URL</span>
           <input type="url" name="image" placeholder="https://..." />
         </label>
@@ -69,11 +64,20 @@
           <label><input type="checkbox" name="temperature" value="room" /> 상온</label>
         </fieldset>
 
-        <fieldset class="menu-form__fieldset">
-          <legend>사이즈 옵션</legend>
-          <label><input type="checkbox" name="sizes" value="regular" /> Regular</label>
-          <label><input type="checkbox" name="sizes" value="large" /> Large</label>
-          <label><input type="checkbox" name="sizes" value="single" /> Single</label>
+        <fieldset class="menu-form__fieldset menu-form__fieldset--column">
+          <legend>사이즈 &amp; 가격 (원) *</legend>
+          <label class="menu-form__size-price">
+            <span><input type="checkbox" name="sizes" value="regular" /> Regular</span>
+            <input type="number" name="price_regular" min="0" step="100" placeholder="가격" />
+          </label>
+          <label class="menu-form__size-price">
+            <span><input type="checkbox" name="sizes" value="large" /> Large</span>
+            <input type="number" name="price_large" min="0" step="100" placeholder="가격" />
+          </label>
+          <label class="menu-form__size-price">
+            <span><input type="checkbox" name="sizes" value="single" /> Single</span>
+            <input type="number" name="price_single" min="0" step="100" placeholder="가격" />
+          </label>
         </fieldset>
 
         <div class="menu-form__row">

@@ -51,6 +51,30 @@ window.addEventListener("DOMContentLoaded", () => {
     `;
   }
 
+  function renderAddonGroup(addons) {
+    if (!addons?.length) {
+      return "";
+    }
+
+    return `
+      <fieldset>
+        <legend>추가 옵션</legend>
+        <div class="option-group">
+          ${addons
+            .map(
+              (addon) => `
+                <label>
+                  <input type="checkbox" name="addons" value="${escapeHtml(addon.id)}" />
+                  <span>${escapeHtml(addon.label)} (+${CafeUtils.formatPrice(addon.price)})</span>
+                </label>
+              `
+            )
+            .join("")}
+        </div>
+      </fieldset>
+    `;
+  }
+
   if (!menu) {
     detailPanel.innerHTML = `
       <div class="empty-state">
@@ -81,7 +105,9 @@ window.addEventListener("DOMContentLoaded", () => {
         ${menu.isRecommended ? '<span class="tag warning">추천</span>' : ""}
         ${menu.isSoldOut ? '<span class="tag danger">품절</span>' : ""}
       </div>
-      <strong class="detail-price">${CafeUtils.formatPrice(menu.price)}</strong>
+      <strong id="detailPrice" class="detail-price">${CafeUtils.formatPrice(
+        CafeUtils.getMenuPrice(menu, menu.options?.sizes?.[0])
+      )}</strong>
       ${
         menu.isSoldOut
           ? '<p class="sold-out-message">현재 품절된 메뉴입니다.</p>'
@@ -89,6 +115,7 @@ window.addEventListener("DOMContentLoaded", () => {
             <form id="optionForm" class="option-form">
               ${renderOptionGroup("temperature", "온도", menu.options?.temperature)}
               ${renderOptionGroup("size", "사이즈", menu.options?.sizes)}
+              ${renderAddonGroup(menu.addons)}
               <div class="quantity-row">
                 <label>
                   <span>수량</span>
@@ -112,6 +139,24 @@ window.addEventListener("DOMContentLoaded", () => {
     return;
   }
 
+  const detailPriceEl = document.querySelector("#detailPrice");
+
+  function updateDetailPrice() {
+    const formData = new FormData(optionForm);
+    const size = formData.get("size");
+    const addonIds = formData.getAll("addons");
+    const total = CafeUtils.getMenuPrice(menu, size) + CafeUtils.getAddonsTotal(menu, addonIds);
+    detailPriceEl.textContent = CafeUtils.formatPrice(total);
+  }
+
+  optionForm.addEventListener("change", (event) => {
+    if (event.target.name !== "size" && event.target.name !== "addons") {
+      return;
+    }
+
+    updateDetailPrice();
+  });
+
   optionForm.addEventListener("submit", (event) => {
     event.preventDefault();
 
@@ -123,6 +168,7 @@ window.addEventListener("DOMContentLoaded", () => {
       {
         temperature: formData.get("temperature"),
         size: formData.get("size"),
+        addons: formData.getAll("addons"),
       },
       quantity
     );

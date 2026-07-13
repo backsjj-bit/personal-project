@@ -12,6 +12,15 @@
     return `<div class="menu-detail__option"><span>${label}</span><strong>${values.join(", ")}</strong></div>`;
   }
 
+  function renderPriceList(price) {
+    const entries = Object.entries(price || {});
+    if (!entries.length) return "";
+    const text = entries
+      .map(([size, value]) => `${size} ${window.CafeUtils.formatPrice(value)}`)
+      .join(" · ");
+    return `<div class="menu-detail__option"><span>가격</span><strong>${text}</strong></div>`;
+  }
+
   function renderMenu(menu) {
     detailEl.innerHTML = `
       <div class="menu-detail__image">
@@ -31,10 +40,11 @@
           }
           ${menu.isRecommended ? '<span class="badge badge--warning">추천 메뉴</span>' : ""}
         </div>
-        <p class="menu-detail__price">${window.CafeUtils.formatPrice(menu.price)}</p>
+        <p class="menu-detail__price">${window.CafeUtils.formatPriceRange(menu)}</p>
         <p class="menu-detail__desc">${menu.description || ""}</p>
         ${renderOptionList("온도", menu.options?.temperature)}
         ${renderOptionList("사이즈", menu.options?.sizes)}
+        ${renderPriceList(menu.price)}
         ${renderOptionList("태그", menu.tags)}
         <div class="menu-detail__actions">
           <a class="btn btn--primary" href="edit.html?id=${menu.id}">수정</a>

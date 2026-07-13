@@ -59,7 +59,7 @@ window.addEventListener("DOMContentLoaded", () => {
                     <h3>${escapeHtml(menu.name)}</h3>
                     <p>${escapeHtml(menu.englishName)}</p>
                   </div>
-                  <span class="price">${CafeUtils.formatPrice(menu.price)}</span>
+                  <span class="price">${CafeUtils.formatPriceRange(menu)}</span>
                 </div>
                 <p class="menu-description">${escapeHtml(menu.description)}</p>
                 <div class="tag-row">

@@ -20,7 +20,7 @@ function renderCart() {
     <div class="cart-item glass-card" data-item-id="${item.id}">
       <div class="cart-item-info">
         <h3>${item.name}</h3>
-        <p class="item-options">${item.options.temperature} · ${item.options.size}</p>
+        <p class="item-options">${[item.options.temperature, item.options.size, ...(item.options.addons || [])].join(' · ')}</p>
         <p class="unit-price">${formatPrice(item.price)}</p>
       </div>
       <div class="cart-item-actions">

@@ -40,7 +40,7 @@
   }
 
   function formatOptions(options = {}) {
-    const values = [options.temperature, options.size].filter(Boolean);
+    const values = [options.temperature, options.size, ...(options.addons || [])].filter(Boolean);
     return values.length ? values.join(" · ") : "기본 옵션";
   }
 

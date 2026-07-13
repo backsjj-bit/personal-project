@@ -16,8 +16,8 @@
 }
 
 .brand-logo {
-  width: 8.25rem;
-  height: 8.25rem;
+  width: 9.5rem;
+  height: 9.5rem;
   border-radius: 50%;
   object-fit: contain;
   background: var(--color-primary-soft);
@@ -51,11 +51,11 @@
 
 .brand-link {
   display: inline-grid;
-  min-height: 3.75rem;
+  min-height: 4.5rem;
   place-items: center;
   margin: 0 0 var(--space-1);
   color: var(--color-accent);
-  font-size: 2.25rem;
+  font-size: 2.75rem;
   font-weight: 800;
   letter-spacing: 0;
   text-transform: uppercase;
@@ -76,16 +76,17 @@
 .primary-button,
 .ghost-button {
   display: inline-grid;
-  min-height: 2.75rem;
+  min-height: 3.25rem;
   place-items: center;
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  padding: 0.625rem 0.875rem;
+  padding: 0.75rem 1.125rem;
   font-weight: 800;
 }
 
 .top-nav a {
   background: var(--color-surface-solid);
+  font-size: var(--font-size-lg);
   white-space: nowrap;
 }
 

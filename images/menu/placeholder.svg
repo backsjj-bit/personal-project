@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300" role="img" aria-label="사진 준비중">
+  <rect width="400" height="300" fill="#f8f2e2" />
+  <g fill="none" stroke="#46591f" stroke-width="6" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M120 130h120v70a20 20 0 0 1-20 20h-80a20 20 0 0 1-20-20v-70Z" />
+    <path d="M240 145h15a20 20 0 0 1 0 40h-15" />
+    <path d="M140 110c5-12 15-12 20-4s15 8 20-4" />
+  </g>
+  <text x="200" y="235" text-anchor="middle" font-family="'Segoe UI', sans-serif" font-size="18" font-weight="700" fill="#46591f">사진 준비중</text>
+</svg>

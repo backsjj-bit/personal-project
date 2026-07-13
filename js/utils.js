@@ -1,7 +1,7 @@
 (function () {
   const CART_STORAGE_KEY = "newCafeCart";
   const ORDER_STORAGE_KEY = "newCafeOrders";
-  const MENU_STORAGE_KEY = "newCafeMenusV7";
+  const MENU_STORAGE_KEY = "newCafeMenusV16";
   const USER_STORAGE_KEY = "newCafeUsers";
   const SESSION_STORAGE_KEY = "newCafeSession";
   const ADMIN_ID = "damon";
@@ -14,6 +14,43 @@
       currency: "KRW",
       maximumFractionDigits: 0,
     }).format(value);
+  }
+
+  function getMenuPrice(menu, size) {
+    const prices = menu.price || {};
+    if (size && prices[size] != null) {
+      return prices[size];
+    }
+
+    const values = Object.values(prices);
+    return values.length ? values[0] : 0;
+  }
+
+  function getAddonsTotal(menu, addonIds = []) {
+    const addons = menu.addons || [];
+    return addonIds.reduce((total, addonId) => {
+      const addon = addons.find((candidate) => candidate.id === addonId);
+      return total + (addon ? addon.price : 0);
+    }, 0);
+  }
+
+  function getAddonLabels(menu, addonIds = []) {
+    const addons = menu.addons || [];
+    return addonIds.map((addonId) => addons.find((candidate) => candidate.id === addonId)?.label).filter(Boolean);
+  }
+
+  function getMenuPriceRange(menu) {
+    const values = Object.values(menu.price || {});
+    if (!values.length) {
+      return { min: 0, max: 0 };
+    }
+
+    return { min: Math.min(...values), max: Math.max(...values) };
+  }
+
+  function formatPriceRange(menu) {
+    const { min, max } = getMenuPriceRange(menu);
+    return min === max ? formatPrice(min) : `${formatPrice(min)} ~ ${formatPrice(max)}`;
   }
 
   function getQueryParam(name) {
@@ -120,7 +157,8 @@
   }
 
   function createCartItemId(menuId, options) {
-    return [menuId, options.temperature, options.size].filter(Boolean).join(":");
+    const addonKey = (options.addons || []).slice().sort().join(",");
+    return [menuId, options.temperature, options.size, addonKey].filter(Boolean).join(":");
   }
 
   function addToCart(menuId, options = {}, quantity = 1) {
@@ -132,10 +170,12 @@
     const normalizedOptions = {
       temperature: options.temperature || menu.options?.temperature?.[0] || "hot",
       size: options.size || menu.options?.sizes?.[0] || "regular",
+      addons: options.addons || [],
     };
     const itemId = createCartItemId(menuId, normalizedOptions);
     const cart = getCart();
     const existingItem = cart.find((item) => item.id === itemId);
+    const unitPrice = getMenuPrice(menu, normalizedOptions.size) + getAddonsTotal(menu, normalizedOptions.addons);
 
     if (existingItem) {
       existingItem.quantity += quantity;
@@ -144,9 +184,13 @@
         id: itemId,
         menuId,
         name: menu.name,
-        price: menu.price,
+        price: unitPrice,
         quantity,
-        options: normalizedOptions,
+        options: {
+          temperature: normalizedOptions.temperature,
+          size: normalizedOptions.size,
+          addons: getAddonLabels(menu, normalizedOptions.addons),
+        },
       });
     }
 
@@ -264,6 +308,11 @@
     CART_STORAGE_KEY,
     ORDER_STORAGE_KEY,
     formatPrice,
+    getMenuPrice,
+    getMenuPriceRange,
+    formatPriceRange,
+    getAddonsTotal,
+    getAddonLabels,
     getQueryParam,
     findMenuById,
     findCategoryById,

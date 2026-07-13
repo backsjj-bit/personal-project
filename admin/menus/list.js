@@ -35,7 +35,7 @@
         <small>${menu.englishName || ""}</small>
       </span>
       <span>${getCategoryLabel(menu.categoryId)}</span>
-      <span>${window.CafeUtils.formatPrice(menu.price)}</span>
+      <span>${window.CafeUtils.formatPriceRange(menu)}</span>
       <span class="menu-table__status">
         ${
           menu.isSoldOut
