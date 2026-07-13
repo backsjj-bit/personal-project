@@ -103,6 +103,8 @@
 }
 
 .page-with-sidebar {
+  width: min(100% - 2rem, 1400px);
+  margin-inline: auto;
   display: grid;
   grid-template-columns: 1fr;
   gap: var(--space-6);
@@ -111,17 +113,17 @@
 
 @media (min-width: 1100px) {
   .page-with-sidebar {
-    grid-template-columns: 1fr 20rem;
+    grid-template-columns: 1fr 26rem;
   }
 }
 
 .cart-sidebar {
   display: none;
   flex-direction: column;
-  gap: var(--space-3);
+  gap: var(--space-4);
   position: sticky;
   top: 7rem;
-  padding: var(--space-5);
+  padding: var(--space-6);
 }
 
 @media (min-width: 1100px) {
@@ -201,6 +203,35 @@
   grid-template-columns: minmax(14rem, 1fr) 12rem;
   gap: var(--space-4);
   padding: var(--space-5);
+}
+
+.category-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.category-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 2.25rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-pill);
+  padding: 0.375rem 0.875rem;
+  background: var(--color-surface-solid);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: 800;
+}
+
+.category-chip:hover {
+  border-color: var(--color-primary);
+}
+
+.category-chip.is-active {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  color: #ffffff;
 }
 
 label {

@@ -2,6 +2,7 @@ window.addEventListener("DOMContentLoaded", () => {
   const { CafeData, CafeUtils } = window;
   const searchInput = document.querySelector("#searchInput");
   const categoryFilter = document.querySelector("#categoryFilter");
+  const categoryChips = document.querySelector("#categoryChips");
   const menuGrid = document.querySelector("#menuGrid");
   const menuCount = document.querySelector("#menuCount");
 
@@ -19,6 +20,31 @@ window.addEventListener("DOMContentLoaded", () => {
       '<option value="all">전체</option>',
       ...CafeData.categories.map((category) => `<option value="${category.id}">${escapeHtml(category.label || category.name)}</option>`),
     ].join("");
+  }
+
+  function renderCategoryChips() {
+    const chips = [
+      { id: "all", label: "전체" },
+      ...CafeData.categories.map((category) => ({ id: category.id, label: category.label || category.name })),
+    ];
+
+    categoryChips.innerHTML = chips
+      .map(
+        (chip) => `
+          <button type="button" class="category-chip" data-category="${escapeHtml(chip.id)}">
+            ${escapeHtml(chip.label)}
+          </button>
+        `
+      )
+      .join("");
+
+    updateActiveChip();
+  }
+
+  function updateActiveChip() {
+    categoryChips.querySelectorAll(".category-chip").forEach((chip) => {
+      chip.classList.toggle("is-active", chip.dataset.category === categoryFilter.value);
+    });
   }
 
   function getFilteredMenus() {
@@ -77,9 +103,22 @@ window.addEventListener("DOMContentLoaded", () => {
 
   [searchInput, categoryFilter].forEach((element) => {
     element.addEventListener("input", renderMenus);
-    element.addEventListener("change", renderMenus);
+    element.addEventListener("change", () => {
+      updateActiveChip();
+      renderMenus();
+    });
+  });
+
+  categoryChips.addEventListener("click", (event) => {
+    const chip = event.target.closest(".category-chip");
+    if (!chip) return;
+
+    categoryFilter.value = chip.dataset.category;
+    updateActiveChip();
+    renderMenus();
   });
 
   renderCategoryFilter();
+  renderCategoryChips();
   renderMenus();
 });
