@@ -29,6 +29,20 @@
     <div id="cart-list" class="cart-list"></div>
 
     <div id="cart-summary" class="cart-summary glass-card" hidden>
+      <div id="coupon-section" class="coupon-section" hidden>
+        <label class="coupon-option">
+          <input type="checkbox" id="coupon-stamp" />
+          <span id="coupon-stamp-label"></span>
+        </label>
+        <label class="coupon-option">
+          <input type="checkbox" id="coupon-signup" />
+          <span>가입 축하 쿠폰 사용 (-3,500원)</span>
+        </label>
+      </div>
+      <div id="discount-row" class="total-row" hidden>
+        <span>할인 금액</span>
+        <span id="cart-discount" class="discount-price"></span>
+      </div>
       <div class="total-row">
         <span>총 금액</span>
         <span id="cart-total" class="total-price"></span>

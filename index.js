@@ -65,6 +65,81 @@ window.addEventListener("DOMContentLoaded", () => {
       .join("");
   }
 
+  function renderStampCard() {
+    const stampCard = document.querySelector("#stampCard");
+    const currentUser = CafeUtils.getCurrentUser();
+
+    if (!currentUser) {
+      stampCard.innerHTML = `
+        <p class="eyebrow">Stamp</p>
+        <h2>스탬프 적립 이벤트</h2>
+        <p class="stamp-card__desc">로그인하면 주문할 때마다 스탬프가 쌓여요. 10개를 모으면 2,000원 쿠폰을 드려요!</p>
+        <a class="primary-button" href="./auth/login.html">로그인하고 시작하기</a>
+      `;
+      return;
+    }
+
+    const { stamps, availableCoupons } = CafeUtils.getStampInfo(currentUser.email);
+    const dots = Array.from({ length: 10 }, (_, index) => {
+      const filled = index < stamps;
+      return `<span class="stamp-dot ${filled ? "is-filled" : ""}">${filled ? "☕" : ""}</span>`;
+    }).join("");
+
+    stampCard.innerHTML = `
+      <p class="eyebrow">Stamp</p>
+      <h2>스탬프 적립 이벤트</h2>
+      <p class="stamp-card__desc">주문 10회마다 2,000원 쿠폰을 드려요!</p>
+      <div class="stamp-dots">${dots}</div>
+      <p class="stamp-card__status">${
+        availableCoupons > 0
+          ? `사용 가능한 쿠폰 ${availableCoupons}장이 있어요! 장바구니에서 사용해보세요 🎉`
+          : `${stamps} / 10 스탬프`
+      }</p>
+    `;
+  }
+
+  function initHeroCarousel() {
+    const track = document.querySelector("#heroTrack");
+    const prevButton = document.querySelector("#heroPrev");
+    const nextButton = document.querySelector("#heroNext");
+    const dots = Array.from(document.querySelectorAll(".hero-carousel__dot"));
+
+    if (!track) {
+      return;
+    }
+
+    function goToSlide(index) {
+      const slideWidth = track.clientWidth;
+      track.scrollTo({ left: slideWidth * index, behavior: "smooth" });
+    }
+
+    function updateActiveDot() {
+      const index = Math.round(track.scrollLeft / track.clientWidth);
+      dots.forEach((dot, dotIndex) => dot.classList.toggle("is-active", dotIndex === index));
+    }
+
+    prevButton?.addEventListener("click", () => {
+      const index = Math.max(0, Math.round(track.scrollLeft / track.clientWidth) - 1);
+      goToSlide(index);
+    });
+
+    nextButton?.addEventListener("click", () => {
+      const maxIndex = track.children.length - 1;
+      const index = Math.min(maxIndex, Math.round(track.scrollLeft / track.clientWidth) + 1);
+      goToSlide(index);
+    });
+
+    dots.forEach((dot) => {
+      dot.addEventListener("click", () => goToSlide(Number(dot.dataset.slide)));
+    });
+
+    track.addEventListener("scroll", () => {
+      window.requestAnimationFrame(updateActiveDot);
+    });
+  }
+
   renderRecommended();
   renderCategories();
+  renderStampCard();
+  initHeroCarousel();
 });

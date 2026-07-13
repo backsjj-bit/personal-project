@@ -226,20 +226,56 @@
     return orders;
   }
 
-  function createOrder(cartItems = getCart()) {
+  const COUPON_DISCOUNT = 2000;
+  const STAMPS_PER_COUPON = 10;
+  const SIGNUP_COUPON_DISCOUNT = 3500;
+
+  function getStampInfo(email) {
+    if (!email) {
+      return { orderCount: 0, stamps: 0, availableCoupons: 0 };
+    }
+
+    const userOrders = getOrders().filter((order) => order.userEmail === email);
+    const orderCount = userOrders.length;
+    const redeemedCoupons = userOrders.filter((order) => order.couponApplied).length;
+    const availableCoupons = Math.max(Math.floor(orderCount / STAMPS_PER_COUPON) - redeemedCoupons, 0);
+    const stamps = orderCount % STAMPS_PER_COUPON;
+
+    return { orderCount, stamps, availableCoupons };
+  }
+
+  function createOrder(cartItems = getCart(), { useCoupon = false, useSignupCoupon = false } = {}) {
     if (!cartItems.length) {
       return null;
     }
 
+    const currentUser = getCurrentUser();
+    const email = currentUser?.email || null;
+    const canUseCoupon = useCoupon && getStampInfo(email).availableCoupons > 0;
+    const canUseSignupCoupon = useSignupCoupon && hasSignupCoupon(email);
+    const subtotal = getCartTotal(cartItems);
+    const discount = Math.min(
+      (canUseCoupon ? COUPON_DISCOUNT : 0) + (canUseSignupCoupon ? SIGNUP_COUPON_DISCOUNT : 0),
+      subtotal
+    );
+
     const order = {
       id: `order-${Date.now()}`,
       items: cartItems,
-      totalPrice: getCartTotal(cartItems),
+      userEmail: email,
+      subtotal,
+      discount,
+      couponApplied: canUseCoupon,
+      signupCouponApplied: canUseSignupCoupon,
+      totalPrice: subtotal - discount,
       status: "pending",
       createdAt: new Date().toISOString(),
     };
 
     saveOrders([order, ...getOrders()]);
+    if (canUseSignupCoupon) {
+      redeemSignupCoupon(email);
+    }
     clearCart();
     return order;
   }
@@ -262,10 +298,26 @@
       return { success: false, message: "이미 가입된 이메일입니다." };
     }
 
-    const user = { name, email, password };
+    const user = { name, email, password, signupCouponUsed: false };
     saveUsers([...getUsers(), user]);
     writeStorage(SESSION_STORAGE_KEY, email);
     return { success: true, user };
+  }
+
+  function hasSignupCoupon(email) {
+    if (!email) {
+      return false;
+    }
+
+    const user = findUserByEmail(email);
+    return !!user && user.signupCouponUsed !== true;
+  }
+
+  function redeemSignupCoupon(email) {
+    const nextUsers = getUsers().map((user) =>
+      user.email === email ? { ...user, signupCouponUsed: true } : user
+    );
+    saveUsers(nextUsers);
   }
 
   function login(email, password) {
@@ -333,6 +385,10 @@
     getOrders,
     saveOrders,
     createOrder,
+    getStampInfo,
+    COUPON_DISCOUNT,
+    hasSignupCoupon,
+    SIGNUP_COUPON_DISCOUNT,
     registerUser,
     login,
     logout,
