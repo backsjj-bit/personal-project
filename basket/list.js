@@ -8,6 +8,7 @@ const {
   getCurrentUser,
   getStampInfo,
   hasSignupCoupon,
+  cartHasLevainCookie,
   COUPON_DISCOUNT,
   SIGNUP_COUPON_DISCOUNT,
 } = window.CafeUtils;
@@ -16,33 +17,39 @@ const couponSectionEl = document.getElementById('coupon-section');
 const couponStampEl = document.getElementById('coupon-stamp');
 const couponStampLabelEl = document.getElementById('coupon-stamp-label');
 const couponSignupEl = document.getElementById('coupon-signup');
+const couponSignupHintEl = document.getElementById('coupon-signup-hint');
 const discountRowEl = document.getElementById('discount-row');
 const cartDiscountEl = document.getElementById('cart-discount');
 const cartTotalEl = document.getElementById('cart-total');
 
-function getAvailableCoupons() {
+function getAvailableCoupons(cart) {
   const currentUser = getCurrentUser();
   if (!currentUser) {
-    return { stampCoupons: 0, signupCoupon: false };
+    return { stampCoupons: 0, hasSignup: false, signupNeedsLevain: false };
   }
 
+  const hasSignup = hasSignupCoupon(currentUser.email);
   return {
     stampCoupons: getStampInfo(currentUser.email).availableCoupons,
-    signupCoupon: hasSignupCoupon(currentUser.email),
+    hasSignup,
+    signupNeedsLevain: hasSignup && !cartHasLevainCookie(cart),
   };
 }
 
 function renderCouponOptions() {
-  const { stampCoupons, signupCoupon } = getAvailableCoupons();
+  const cart = getCart();
+  const { stampCoupons, hasSignup, signupNeedsLevain } = getAvailableCoupons(cart);
+  const signupUsable = hasSignup && !signupNeedsLevain;
 
   couponStampEl.closest('.coupon-option').hidden = stampCoupons <= 0;
   couponStampLabelEl.textContent = `사용 가능한 스탬프 쿠폰 ${stampCoupons}장 사용 (-${formatPrice(COUPON_DISCOUNT).replace('₩', '')}원)`;
-  couponSignupEl.closest('.coupon-option').hidden = !signupCoupon;
+  couponSignupEl.closest('.coupon-option').hidden = !signupUsable;
+  couponSignupHintEl.hidden = !signupNeedsLevain;
 
-  couponSectionEl.hidden = stampCoupons <= 0 && !signupCoupon;
+  couponSectionEl.hidden = stampCoupons <= 0 && !signupUsable && !signupNeedsLevain;
 
   if (stampCoupons <= 0) couponStampEl.checked = false;
-  if (!signupCoupon) couponSignupEl.checked = false;
+  if (!signupUsable) couponSignupEl.checked = false;
 }
 
 function updateTotals() {

@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./detail.css" />
     <script src="../js/data.js" defer></script>
     <script src="../js/utils.js" defer></script>
+    <script src="../js/cart-sidebar.js" defer></script>
     <script src="./detail.js" defer></script>
   </head>
   <body>
@@ -25,8 +26,22 @@
       </nav>
     </header>
 
-    <main class="container detail-page">
+    <main class="container detail-page page-with-sidebar">
       <article id="detailPanel" class="detail-panel glass-card" aria-live="polite"></article>
+
+      <aside class="cart-sidebar glass-card" id="cartSidebar">
+        <div class="cart-sidebar__header">
+          <h3>장바구니</h3>
+          <span id="cartSidebarCount" class="count-badge">0개</span>
+        </div>
+        <div id="cartSidebarList" class="cart-sidebar__list"></div>
+        <p id="cartSidebarEmpty" class="cart-sidebar__empty">담긴 메뉴가 없습니다.</p>
+        <div class="cart-sidebar__total">
+          <span>합계</span>
+          <span id="cartSidebarTotal"></span>
+        </div>
+        <a class="primary-button cart-sidebar__checkout" id="cartSidebarCheckout" href="../basket/list.html">바로 결제하기</a>
+      </aside>
     </main>
   </body>
 </html>

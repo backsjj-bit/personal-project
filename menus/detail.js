@@ -174,5 +174,6 @@ window.addEventListener("DOMContentLoaded", () => {
     );
 
     document.querySelector("#feedback").textContent = "장바구니에 담았습니다.";
+    window.renderCartSidebar?.();
   });
 });

@@ -1,7 +1,7 @@
 (function () {
   const CART_STORAGE_KEY = "newCafeCart";
   const ORDER_STORAGE_KEY = "newCafeOrders";
-  const MENU_STORAGE_KEY = "newCafeMenusV16";
+  const MENU_STORAGE_KEY = "newCafeMenusV17";
   const USER_STORAGE_KEY = "newCafeUsers";
   const SESSION_STORAGE_KEY = "newCafeSession";
   const ADMIN_ID = "damon";
@@ -244,6 +244,10 @@
     return { orderCount, stamps, availableCoupons };
   }
 
+  function cartHasLevainCookie(cartItems) {
+    return cartItems.some((item) => findMenuById(item.menuId)?.tags?.includes("levain"));
+  }
+
   function createOrder(cartItems = getCart(), { useCoupon = false, useSignupCoupon = false } = {}) {
     if (!cartItems.length) {
       return null;
@@ -252,7 +256,7 @@
     const currentUser = getCurrentUser();
     const email = currentUser?.email || null;
     const canUseCoupon = useCoupon && getStampInfo(email).availableCoupons > 0;
-    const canUseSignupCoupon = useSignupCoupon && hasSignupCoupon(email);
+    const canUseSignupCoupon = useSignupCoupon && hasSignupCoupon(email) && cartHasLevainCookie(cartItems);
     const subtotal = getCartTotal(cartItems);
     const discount = Math.min(
       (canUseCoupon ? COUPON_DISCOUNT : 0) + (canUseSignupCoupon ? SIGNUP_COUPON_DISCOUNT : 0),
@@ -389,6 +393,7 @@
     COUPON_DISCOUNT,
     hasSignupCoupon,
     SIGNUP_COUPON_DISCOUNT,
+    cartHasLevainCookie,
     registerUser,
     login,
     logout,

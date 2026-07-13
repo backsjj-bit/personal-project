@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="./list.css" />
     <script src="../js/data.js" defer></script>
     <script src="../js/utils.js" defer></script>
+    <script src="../js/cart-sidebar.js" defer></script>
     <script src="./list.js" defer></script>
   </head>
   <body>
@@ -28,28 +29,44 @@
       </nav>
     </header>
 
-    <main class="container menu-page">
-      <section class="menu-toolbar glass-card" aria-label="메뉴 검색 및 필터">
-        <label>
-          <span>검색</span>
-          <input id="searchInput" type="search" placeholder="메뉴명, 설명 검색" />
-        </label>
-        <label>
-          <span>카테고리</span>
-          <select id="categoryFilter"></select>
-        </label>
-      </section>
+    <main class="container page-with-sidebar">
+      <div class="menu-page">
+        <section class="menu-toolbar glass-card" aria-label="메뉴 검색 및 필터">
+          <label>
+            <span>검색</span>
+            <input id="searchInput" type="search" placeholder="메뉴명, 설명 검색" />
+          </label>
+          <label>
+            <span>카테고리</span>
+            <select id="categoryFilter"></select>
+          </label>
+        </section>
 
-      <section class="menu-section">
-        <div class="section-heading">
-          <div>
-            <p class="eyebrow">Cafe Menu</p>
-            <h2>오늘의 메뉴</h2>
+        <section class="menu-section">
+          <div class="section-heading">
+            <div>
+              <p class="eyebrow">Cafe Menu</p>
+              <h2>오늘의 메뉴</h2>
+            </div>
+            <span id="menuCount" class="count-badge">0개</span>
           </div>
-          <span id="menuCount" class="count-badge">0개</span>
+          <div id="menuGrid" class="menu-grid" aria-live="polite"></div>
+        </section>
+      </div>
+
+      <aside class="cart-sidebar glass-card" id="cartSidebar">
+        <div class="cart-sidebar__header">
+          <h3>장바구니</h3>
+          <span id="cartSidebarCount" class="count-badge">0개</span>
         </div>
-        <div id="menuGrid" class="menu-grid" aria-live="polite"></div>
-      </section>
+        <div id="cartSidebarList" class="cart-sidebar__list"></div>
+        <p id="cartSidebarEmpty" class="cart-sidebar__empty">담긴 메뉴가 없습니다.</p>
+        <div class="cart-sidebar__total">
+          <span>합계</span>
+          <span id="cartSidebarTotal"></span>
+        </div>
+        <a class="primary-button cart-sidebar__checkout" id="cartSidebarCheckout" href="../basket/list.html">바로 결제하기</a>
+      </aside>
     </main>
   </body>
 </html>
