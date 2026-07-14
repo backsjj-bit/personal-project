@@ -1,4 +1,4 @@
-const { getOrders, formatPrice, getCurrentUser, logout } = window.CafeUtils;
+const { getOrders, formatPrice, getCurrentUser, logout, getStampInfo, hasSignupCoupon } = window.CafeUtils;
 
 const statusLabels = {
   pending: "접수 대기",
@@ -7,12 +7,6 @@ const statusLabels = {
   completed: "완료",
   cancelled: "취소",
 };
-
-const tiers = [
-  { min: 10, label: "골드회원" },
-  { min: 3, label: "실버회원" },
-  { min: 0, label: "일반회원" },
-];
 
 function escapeHtml(value) {
   return String(value ?? "")
@@ -39,14 +33,7 @@ function formatDate(value) {
   }).format(date);
 }
 
-function getTierLabel(orderCount) {
-  return tiers.find((tier) => orderCount >= tier.min).label;
-}
-
 function renderProfile(user, orders) {
-  const tierLabel = getTierLabel(orders.length);
-
-  document.getElementById("tier-badge").textContent = tierLabel;
   document.getElementById("profile-avatar").textContent = user.name.trim().charAt(0).toUpperCase();
   document.getElementById("profile-name").textContent = user.name;
   document.getElementById("profile-desc").textContent =
@@ -61,6 +48,29 @@ function renderSummary(orders) {
   document.getElementById("total-orders").textContent = `${orders.length}건`;
   document.getElementById("active-orders").textContent = `${activeCount}건`;
   document.getElementById("total-price").textContent = formatPrice(totalPrice);
+}
+
+async function renderStampSummary(email) {
+  const { stamps, availableCoupons } = getStampInfo(email);
+  const signupCouponAvailable = await hasSignupCoupon();
+  const dotsEl = document.getElementById("stamp-dots");
+  const statusBadge = document.getElementById("stamp-status-badge");
+  const statusEl = document.getElementById("coupon-status");
+  const signupStatusEl = document.getElementById("signup-coupon-status");
+
+  dotsEl.innerHTML = Array.from({ length: 10 }, (_, index) => {
+    const filled = index < stamps;
+    return `<span class="stamp-dot ${filled ? "is-filled" : ""}">${filled ? "☕" : ""}</span>`;
+  }).join("");
+
+  statusBadge.textContent = `${stamps} / 10`;
+  statusEl.textContent =
+    availableCoupons > 0
+      ? `사용 가능한 쿠폰 ${availableCoupons}장이 있어요! 장바구니에서 사용해보세요 🎉`
+      : "10번 주문마다 2,000원 쿠폰을 드려요.";
+
+  signupStatusEl.hidden = !signupCouponAvailable;
+  signupStatusEl.textContent = "가입 축하 쿠폰 보유 중이에요! 르뱅쿠키 구매 시 장바구니에서 사용해보세요 🍪";
 }
 
 function renderRecentOrders(orders) {
@@ -107,6 +117,7 @@ async function init() {
 
   const orders = getOrders().filter((order) => order.userEmail === user.email);
   renderProfile(user, orders);
+  await renderStampSummary(user.email);
   renderSummary(orders);
   renderRecentOrders(orders);
 
