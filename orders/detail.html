@@ -4,31 +4,31 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>주문 상세 · 카페</title>
-<link rel="stylesheet" href="../css/variables.css">
-<link rel="stylesheet" href="detail.css">
+<link rel="stylesheet" href="/css/variables.css">
+<link rel="stylesheet" href="/orders/detail.css">
 </head>
 <body>
   <header class="orders-header">
     <div class="container header-inner">
       <span class="brand">☕ 카페</span>
       <nav>
-        <a href="list.html">주문 내역</a>
+        <a href="/orders/list.html">주문 내역</a>
       </nav>
     </div>
   </header>
 
   <main class="container page">
-    <a class="back-link" href="list.html">← 주문 내역으로</a>
+    <a class="back-link" href="/orders/list.html">← 주문 내역으로</a>
 
     <div id="order-detail" class="order-detail"></div>
     <p id="empty-state" class="empty-state" hidden>주문 내역을 찾을 수 없습니다.</p>
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-  <script src="../js/supabaseClient.js"></script>
-  <script src="../js/data.js"></script>
-  <script src="../js/utils.js"></script>
-  <script src="detail.js"></script>
-    <script src="../js/scroll-top.js" defer></script>
+  <script src="/js/supabaseClient.js"></script>
+  <script src="/js/data.js"></script>
+  <script src="/js/utils.js"></script>
+  <script src="/orders/detail.js"></script>
+    <script src="/js/scroll-top.js" defer></script>
   </body>
 </html>

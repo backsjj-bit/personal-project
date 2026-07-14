@@ -4,27 +4,27 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>메뉴 추가 - 카페 관리자</title>
-    <link rel="stylesheet" href="../../css/variables.css" />
-    <link rel="stylesheet" href="create.css" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/admin/menus/create.css" />
   </head>
   <body>
     <header class="admin-header">
       <div class="container admin-header__inner">
         <div class="admin-header__brand-group">
-        <img class="brand-logo brand-logo--admin" src="../../images/logo/duruduru-badge.png" alt="두루두루 디저트 카페 로고" />
-        <a class="admin-header__brand" href="../index.html">두루두루 관리자</a>
+        <img class="brand-logo brand-logo--admin" src="/images/logo/duruduru-badge.png" alt="두루두루 디저트 카페 로고" />
+        <a class="admin-header__brand" href="/admin/index.html">두루두루 관리자</a>
         </div>
         <nav class="admin-nav">
-          <a href="../index.html">대시보드</a>
-          <a href="list.html" class="is-active">메뉴 관리</a>
-          <a href="../orders/list.html">주문 관리</a>
-          <a href="../../index.html" class="admin-nav__exit">고객 페이지로 나가기</a>
+          <a href="/admin/index.html">대시보드</a>
+          <a href="/admin/menus/list.html" class="is-active">메뉴 관리</a>
+          <a href="/admin/orders/list.html">주문 관리</a>
+          <a href="/index.html" class="admin-nav__exit">고객 페이지로 나가기</a>
         </nav>
       </div>
     </header>
 
     <main class="container admin-main">
-      <a class="back-link" href="list.html">← 메뉴 목록으로</a>
+      <a class="back-link" href="/admin/menus/list.html">← 메뉴 목록으로</a>
       <h1>메뉴 추가</h1>
 
       <form id="menu-form" class="menu-form glass-card">
@@ -91,15 +91,15 @@
         </div>
 
         <div class="menu-form__actions">
-          <a class="btn btn--ghost" href="list.html">취소</a>
+          <a class="btn btn--ghost" href="/admin/menus/list.html">취소</a>
           <button type="submit" class="btn btn--primary">메뉴 추가</button>
         </div>
       </form>
     </main>
 
-    <script src="../../js/data.js"></script>
-    <script src="../../js/utils.js"></script>
-    <script src="create.js"></script>
-      <script src="../../js/scroll-top.js" defer></script>
+    <script src="/js/data.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/admin/menus/create.js"></script>
+      <script src="/js/scroll-top.js" defer></script>
   </body>
 </html>

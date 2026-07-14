@@ -4,21 +4,21 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>대시보드 - 카페 관리자</title>
-    <link rel="stylesheet" href="../css/variables.css" />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/admin/index.css" />
   </head>
   <body>
     <header class="admin-header">
       <div class="container admin-header__inner">
         <div class="admin-header__brand-group">
-        <img class="brand-logo brand-logo--admin" src="../images/logo/duruduru-badge.png" alt="두루두루 디저트 카페 로고" />
-        <a class="admin-header__brand" href="index.html">두루두루 관리자</a>
+        <img class="brand-logo brand-logo--admin" src="/images/logo/duruduru-badge.png" alt="두루두루 디저트 카페 로고" />
+        <a class="admin-header__brand" href="/admin/index.html">두루두루 관리자</a>
         </div>
         <nav class="admin-nav">
-          <a href="index.html" class="is-active">대시보드</a>
-          <a href="menus/list.html">메뉴 관리</a>
-          <a href="orders/list.html">주문 관리</a>
-          <a href="../index.html" class="admin-nav__exit">고객 페이지로 나가기</a>
+          <a href="/admin/index.html" class="is-active">대시보드</a>
+          <a href="/admin/menus/list.html">메뉴 관리</a>
+          <a href="/admin/orders/list.html">주문 관리</a>
+          <a href="/index.html" class="admin-nav__exit">고객 페이지로 나가기</a>
         </nav>
       </div>
     </header>
@@ -60,16 +60,16 @@
             <h2>최근 주문</h2>
             <p class="section-heading__desc">가장 최근 접수된 주문을 빠르게 확인하세요.</p>
           </div>
-          <a class="btn btn--ghost btn--sm" href="orders/list.html">전체 보기</a>
+          <a class="btn btn--ghost btn--sm" href="/admin/orders/list.html">전체 보기</a>
         </div>
         <div id="recent-orders" class="order-list" aria-live="polite"></div>
         <p id="empty-orders" class="empty-state glass-card" hidden>아직 접수된 주문이 없습니다.</p>
       </section>
     </main>
 
-    <script src="../js/data.js"></script>
-    <script src="../js/utils.js"></script>
-    <script src="index.js"></script>
-      <script src="../js/scroll-top.js" defer></script>
+    <script src="/js/data.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/admin/index.js"></script>
+      <script src="/js/scroll-top.js" defer></script>
   </body>
 </html>

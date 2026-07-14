@@ -4,24 +4,24 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>마이페이지 | 두루두루 디저트 카페</title>
-    <link rel="stylesheet" href="../css/variables.css" />
-    <link rel="stylesheet" href="./index.css" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/my/index.css" />
   </head>
   <body>
     <header class="site-header">
       <div>
-        <img class="brand-logo" src="../images/logo/duruduru-badge.png" alt="두루두루 디저트 카페 로고" />
+        <img class="brand-logo" src="/images/logo/duruduru-badge.png" alt="두루두루 디저트 카페 로고" />
         <div class="brand-text">
-        <a class="brand-link" href="../index.html">두루두루</a>
+        <a class="brand-link" href="/index.html">두루두루</a>
         <h1>마이페이지</h1>
         </div>
       </div>
       <nav class="top-nav" aria-label="고객 메뉴">
-        <a href="../index.html">홈</a>
-        <a href="../menus/list.html">메뉴</a>
-        <a href="../basket/list.html">장바구니</a>
-        <a href="../orders/list.html">주문내역</a>
-        <a aria-current="page" href="./index.html">마이페이지</a>
+        <a href="/index.html">홈</a>
+        <a href="/menus/list.html">메뉴</a>
+        <a href="/basket/list.html">장바구니</a>
+        <a href="/orders/list.html">주문내역</a>
+        <a aria-current="page" href="/my/index.html">마이페이지</a>
       </nav>
     </header>
 
@@ -30,8 +30,8 @@
         <h2>로그인이 필요합니다</h2>
         <p>마이페이지는 로그인 후 이용할 수 있어요.</p>
         <div class="guest-actions">
-          <a class="btn btn-primary" href="../auth/login.html">로그인</a>
-          <a class="btn btn-ghost" href="../auth/signup.html">회원가입</a>
+          <a class="btn btn-primary" href="/auth/login.html">로그인</a>
+          <a class="btn btn-ghost" href="/auth/signup.html">회원가입</a>
         </div>
       </section>
 
@@ -67,7 +67,7 @@
         <section class="section-block">
           <div class="section-heading">
             <h2>최근 주문</h2>
-            <a class="ghost-link" href="../orders/list.html">전체 보기</a>
+            <a class="ghost-link" href="/orders/list.html">전체 보기</a>
           </div>
           <div id="recent-orders" class="recent-orders" aria-live="polite"></div>
           <p id="recent-empty" class="empty-state" hidden>아직 주문 내역이 없습니다.</p>
@@ -76,10 +76,10 @@
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
-    <script src="../js/supabaseClient.js"></script>
-    <script src="../js/data.js"></script>
-    <script src="../js/utils.js"></script>
-    <script src="./index.js"></script>
-      <script src="../js/scroll-top.js" defer></script>
+    <script src="/js/supabaseClient.js"></script>
+    <script src="/js/data.js"></script>
+    <script src="/js/utils.js"></script>
+    <script src="/my/index.js"></script>
+      <script src="/js/scroll-top.js" defer></script>
   </body>
 </html>
