@@ -306,6 +306,53 @@
   padding: var(--space-7) var(--space-6);
 }
 
+.team-slide {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+  min-height: 100%;
+  padding: var(--space-7) var(--space-6);
+}
+
+.team-member {
+  flex: 1;
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  text-align: center;
+}
+
+.team-member + .team-member {
+  border-left: 1px solid var(--color-border);
+}
+
+.team-member__avatar {
+  display: grid;
+  place-items: center;
+  width: 4rem;
+  height: 4rem;
+  border-radius: 50%;
+  background: var(--color-primary);
+  color: #ffffff;
+  font-size: var(--font-size-xl);
+  font-weight: 900;
+}
+
+.team-member__role {
+  margin: 0;
+  color: var(--color-accent);
+  font-size: var(--font-size-lg);
+  font-weight: 900;
+}
+
+.team-member__name {
+  margin: 0;
+  font-size: var(--font-size-xl);
+  font-weight: 900;
+}
+
 .hero-text {
   display: grid;
   gap: var(--space-3);
