@@ -1,4 +1,4 @@
-const { getOrders, formatPrice } = window.CafeUtils;
+const { getOrders, formatPrice, getCurrentUser } = window.CafeUtils;
 
 const statusLabels = {
   pending: "접수 대기",
@@ -49,8 +49,9 @@ function renderSummary(orders) {
   document.getElementById("total-price").textContent = formatPrice(totalPrice);
 }
 
-function renderOrders() {
-  const orders = getOrders();
+async function renderOrders() {
+  const currentUser = await getCurrentUser();
+  const orders = getOrders().filter((order) => order.userEmail === currentUser?.email);
   const orderList = document.getElementById("order-list");
   const emptyState = document.getElementById("empty-state");
 
@@ -102,3 +103,4 @@ function renderOrders() {
 }
 
 renderOrders();
+

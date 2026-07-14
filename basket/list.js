@@ -22,13 +22,13 @@ const discountRowEl = document.getElementById('discount-row');
 const cartDiscountEl = document.getElementById('cart-discount');
 const cartTotalEl = document.getElementById('cart-total');
 
-function getAvailableCoupons(cart) {
-  const currentUser = getCurrentUser();
+async function getAvailableCoupons(cart) {
+  const currentUser = await getCurrentUser();
   if (!currentUser) {
     return { stampCoupons: 0, hasSignup: false, signupNeedsLevain: false };
   }
 
-  const hasSignup = hasSignupCoupon(currentUser.email);
+  const hasSignup = await hasSignupCoupon();
   return {
     stampCoupons: getStampInfo(currentUser.email).availableCoupons,
     hasSignup,
@@ -36,9 +36,9 @@ function getAvailableCoupons(cart) {
   };
 }
 
-function renderCouponOptions() {
+async function renderCouponOptions() {
   const cart = getCart();
-  const { stampCoupons, hasSignup, signupNeedsLevain } = getAvailableCoupons(cart);
+  const { stampCoupons, hasSignup, signupNeedsLevain } = await getAvailableCoupons(cart);
   const signupUsable = hasSignup && !signupNeedsLevain;
 
   couponStampEl.closest('.coupon-option').hidden = stampCoupons <= 0;
@@ -63,7 +63,7 @@ function updateTotals() {
   cartTotalEl.textContent = formatPrice(total);
 }
 
-function renderCart() {
+async function renderCart() {
   const cart = getCart();
   const listEl = document.getElementById('cart-list');
   const summaryEl = document.getElementById('cart-summary');
@@ -98,11 +98,11 @@ function renderCart() {
     </div>
   `).join('');
 
-  renderCouponOptions();
+  await renderCouponOptions();
   updateTotals();
 }
 
-document.getElementById('cart-list').addEventListener('click', (e) => {
+document.getElementById('cart-list').addEventListener('click', async (e) => {
   const itemEl = e.target.closest('[data-item-id]');
   if (!itemEl) return;
 
@@ -113,28 +113,28 @@ document.getElementById('cart-list').addEventListener('click', (e) => {
 
   if (e.target.closest('[data-qty-minus]')) {
     updateCartItem(itemId, item.quantity - 1);
-    renderCart();
+    await renderCart();
   } else if (e.target.closest('[data-qty-plus]')) {
     updateCartItem(itemId, item.quantity + 1);
-    renderCart();
+    await renderCart();
   } else if (e.target.closest('[data-remove]')) {
     removeCartItem(itemId);
-    renderCart();
+    await renderCart();
   }
 });
 
 couponStampEl.addEventListener('change', updateTotals);
 couponSignupEl.addEventListener('change', updateTotals);
 
-document.getElementById('btn-checkout').addEventListener('click', () => {
+document.getElementById('btn-checkout').addEventListener('click', async () => {
   const cart = getCart();
   if (cart.length === 0) return;
 
-  createOrder(cart, {
+  await createOrder(cart, {
     useCoupon: couponStampEl.checked,
     useSignupCoupon: couponSignupEl.checked,
   });
-  renderCart();
+  await renderCart();
 
   const successEl = document.getElementById('order-success');
   successEl.hidden = false;

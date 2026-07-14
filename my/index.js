@@ -91,8 +91,8 @@ function renderRecentOrders(orders) {
     .join("");
 }
 
-function init() {
-  const user = getCurrentUser();
+async function init() {
+  const user = await getCurrentUser();
   const guestView = document.getElementById("guest-view");
   const memberView = document.getElementById("member-view");
 
@@ -105,13 +105,13 @@ function init() {
   guestView.hidden = true;
   memberView.hidden = false;
 
-  const orders = getOrders();
+  const orders = getOrders().filter((order) => order.userEmail === user.email);
   renderProfile(user, orders);
   renderSummary(orders);
   renderRecentOrders(orders);
 
-  document.getElementById("btn-logout").addEventListener("click", () => {
-    logout();
+  document.getElementById("btn-logout").addEventListener("click", async () => {
+    await logout();
     window.location.href = "../auth/login.html";
   });
 }

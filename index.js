@@ -1,4 +1,4 @@
-window.addEventListener("DOMContentLoaded", () => {
+window.addEventListener("DOMContentLoaded", async () => {
   const { CafeData, CafeUtils } = window;
   const recommendedGrid = document.querySelector("#recommendedGrid");
   const categoryList = document.querySelector("#categoryList");
@@ -65,9 +65,9 @@ window.addEventListener("DOMContentLoaded", () => {
       .join("");
   }
 
-  function renderStampCard() {
+  async function renderStampCard() {
     const stampCard = document.querySelector("#stampCard");
-    const currentUser = CafeUtils.getCurrentUser();
+    const currentUser = await CafeUtils.getCurrentUser();
 
     if (!currentUser) {
       stampCard.innerHTML = `
@@ -165,6 +165,6 @@ window.addEventListener("DOMContentLoaded", () => {
 
   renderRecommended();
   renderCategories();
-  renderStampCard();
+  await renderStampCard();
   initHeroCarousel();
 });

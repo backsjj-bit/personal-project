@@ -2,8 +2,6 @@
   const CART_STORAGE_KEY = "newCafeCart";
   const ORDER_STORAGE_KEY = "newCafeOrders";
   const MENU_STORAGE_KEY = "newCafeMenusV17";
-  const USER_STORAGE_KEY = "newCafeUsers";
-  const SESSION_STORAGE_KEY = "newCafeSession";
   const ADMIN_ID = "damon";
   const ADMIN_PASSWORD = "9802";
   const ADMIN_SESSION_KEY = "newCafeAdminSession";
@@ -248,15 +246,16 @@
     return cartItems.some((item) => findMenuById(item.menuId)?.tags?.includes("levain"));
   }
 
-  function createOrder(cartItems = getCart(), { useCoupon = false, useSignupCoupon = false } = {}) {
+  async function createOrder(cartItems = getCart(), { useCoupon = false, useSignupCoupon = false } = {}) {
     if (!cartItems.length) {
       return null;
     }
 
-    const currentUser = getCurrentUser();
+    const currentUser = await getCurrentUser();
     const email = currentUser?.email || null;
     const canUseCoupon = useCoupon && getStampInfo(email).availableCoupons > 0;
-    const canUseSignupCoupon = useSignupCoupon && hasSignupCoupon(email) && cartHasLevainCookie(cartItems);
+    const canUseSignupCoupon =
+      useSignupCoupon && (await hasSignupCoupon()) && cartHasLevainCookie(cartItems);
     const subtotal = getCartTotal(cartItems);
     const discount = Math.min(
       (canUseCoupon ? COUPON_DISCOUNT : 0) + (canUseSignupCoupon ? SIGNUP_COUPON_DISCOUNT : 0),
@@ -278,69 +277,83 @@
 
     saveOrders([order, ...getOrders()]);
     if (canUseSignupCoupon) {
-      redeemSignupCoupon(email);
+      await redeemSignupCoupon();
     }
     clearCart();
     return order;
   }
 
-  function getUsers() {
-    return readStorage(USER_STORAGE_KEY, []);
-  }
+  async function registerUser({ name, email, password }) {
+    const { data, error } = await supabaseClient.auth.signUp({
+      email,
+      password,
+      options: { data: { name } },
+    });
 
-  function saveUsers(users) {
-    writeStorage(USER_STORAGE_KEY, users);
-    return users;
-  }
-
-  function findUserByEmail(email) {
-    return getUsers().find((user) => user.email === email) || null;
-  }
-
-  function registerUser({ name, email, password }) {
-    if (findUserByEmail(email)) {
-      return { success: false, message: "이미 가입된 이메일입니다." };
+    if (error) {
+      const message = /already registered|already exists/i.test(error.message)
+        ? "이미 가입된 이메일입니다."
+        : error.message;
+      return { success: false, message };
     }
 
-    const user = { name, email, password, signupCouponUsed: false };
-    saveUsers([...getUsers(), user]);
-    writeStorage(SESSION_STORAGE_KEY, email);
-    return { success: true, user };
+    return { success: true, user: data.user };
   }
 
-  function hasSignupCoupon(email) {
-    if (!email) {
-      return false;
-    }
-
-    const user = findUserByEmail(email);
-    return !!user && user.signupCouponUsed !== true;
+  async function fetchProfile(userId) {
+    const { data } = await supabaseClient
+      .from("profiles")
+      .select("name, signup_coupon_used")
+      .eq("id", userId)
+      .single();
+    return data;
   }
 
-  function redeemSignupCoupon(email) {
-    const nextUsers = getUsers().map((user) =>
-      user.email === email ? { ...user, signupCouponUsed: true } : user
-    );
-    saveUsers(nextUsers);
-  }
-
-  function login(email, password) {
-    const user = findUserByEmail(email);
-    if (!user || user.password !== password) {
+  async function login(email, password) {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) {
       return { success: false, message: "이메일 또는 비밀번호가 올바르지 않습니다." };
     }
 
-    writeStorage(SESSION_STORAGE_KEY, email);
-    return { success: true, user };
+    return { success: true, user: data.user };
   }
 
-  function logout() {
-    localStorage.removeItem(SESSION_STORAGE_KEY);
+  async function logout() {
+    await supabaseClient.auth.signOut();
   }
 
-  function getCurrentUser() {
-    const email = readStorage(SESSION_STORAGE_KEY, null);
-    return email ? findUserByEmail(email) : null;
+  async function getCurrentUser() {
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+      return null;
+    }
+
+    const profile = await fetchProfile(user.id);
+    return {
+      name: profile?.name || user.user_metadata?.name || "",
+      email: user.email,
+      signupCouponUsed: profile?.signup_coupon_used === true,
+    };
+  }
+
+  async function hasSignupCoupon() {
+    const currentUser = await getCurrentUser();
+    return !!currentUser && currentUser.signupCouponUsed !== true;
+  }
+
+  async function redeemSignupCoupon() {
+    const {
+      data: { user },
+    } = await supabaseClient.auth.getUser();
+
+    if (!user) {
+      return;
+    }
+
+    await supabaseClient.from("profiles").update({ signup_coupon_used: true }).eq("id", user.id);
   }
 
   function adminLogin(id, password) {

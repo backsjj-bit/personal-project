@@ -1,4 +1,4 @@
-const { getOrders, getQueryParam, formatPrice } = window.CafeUtils;
+const { getOrders, getQueryParam, formatPrice, getCurrentUser } = window.CafeUtils;
 
 const STATUS_LABELS = {
   pending: '주문 접수',
@@ -55,9 +55,12 @@ function renderOrder(order) {
   `;
 }
 
-function init() {
+async function init() {
   const orderId = getQueryParam('id');
-  const order = getOrders().find((savedOrder) => savedOrder.id === orderId);
+  const currentUser = await getCurrentUser();
+  const order = getOrders().find(
+    (savedOrder) => savedOrder.id === orderId && savedOrder.userEmail === currentUser?.email
+  );
   const detailEl = document.getElementById('order-detail');
   const emptyState = document.getElementById('empty-state');
 
