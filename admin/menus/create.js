@@ -6,6 +6,32 @@
 
   const formEl = document.getElementById("menu-form");
   const categorySelectEl = document.getElementById("category-select");
+  const imageFileInputEl = document.getElementById("image-file-input");
+  const imagePreviewEl = document.getElementById("image-preview");
+
+  const DEFAULT_IMAGE =
+    "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80";
+
+  function readFileAsDataUrl(file) {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result);
+      reader.onerror = () => reject(reader.error);
+      reader.readAsDataURL(file);
+    });
+  }
+
+  imageFileInputEl.addEventListener("change", async () => {
+    const file = imageFileInputEl.files?.[0];
+    if (!file) {
+      imagePreviewEl.hidden = true;
+      imagePreviewEl.src = "";
+      return;
+    }
+
+    imagePreviewEl.src = await readFileAsDataUrl(file);
+    imagePreviewEl.hidden = false;
+  });
 
   function renderCategoryOptions() {
     const categories = window.CafeData?.categories || [];
@@ -29,7 +55,7 @@
     return price;
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     const formData = new FormData(formEl);
@@ -40,15 +66,15 @@
       .filter(Boolean);
 
     const sizes = getCheckedValues(formData, "sizes");
+    const imageFile = imageFileInputEl.files?.[0];
+    const image = imageFile ? await readFileAsDataUrl(imageFile) : DEFAULT_IMAGE;
 
     const menuData = {
       name: formData.get("name").toString().trim(),
       englishName: formData.get("englishName").toString().trim(),
       categoryId: formData.get("categoryId"),
       price: getSizePrices(formData, sizes),
-      image:
-        formData.get("image").toString().trim() ||
-        "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&w=900&q=80",
+      image,
       description: formData.get("description").toString().trim(),
       tags,
       options: {

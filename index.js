@@ -13,7 +13,7 @@ window.addEventListener("DOMContentLoaded", async () => {
   }
 
   function renderRecommended() {
-    const recommended = CafeUtils.getMenus().filter((menu) => menu.isRecommended);
+    const recommended = CafeUtils.getMenus().filter((menu) => menu.isRecommended && !menu.isHidden);
 
     if (recommended.length === 0) {
       recommendedGrid.innerHTML = '<p class="empty-state">추천 메뉴가 없습니다.</p>';

@@ -2,7 +2,8 @@ window.addEventListener("DOMContentLoaded", () => {
   const { CafeUtils } = window;
   const detailPanel = document.querySelector("#detailPanel");
   const menuId = CafeUtils.getQueryParam("id");
-  const menu = CafeUtils.findMenuById(menuId);
+  const foundMenu = CafeUtils.findMenuById(menuId);
+  const menu = foundMenu && !foundMenu.isHidden ? foundMenu : null;
 
   function escapeHtml(value) {
     return String(value ?? "")

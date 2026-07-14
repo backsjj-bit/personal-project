@@ -43,10 +43,12 @@
             : '<span class="badge badge--accent">판매중</span>'
         }
         ${menu.isRecommended ? '<span class="badge badge--warning">추천</span>' : ""}
+        ${menu.isHidden ? '<span class="badge badge--danger">숨김</span>' : ""}
       </span>
       <span class="menu-table__actions">
         <a href="detail.html?id=${menu.id}" class="btn btn--ghost btn--sm">상세</a>
         <a href="edit.html?id=${menu.id}" class="btn btn--ghost btn--sm">수정</a>
+        <button type="button" class="btn btn--ghost btn--sm" data-hide-id="${menu.id}">${menu.isHidden ? "숨김 해제" : "숨김"}</button>
         <button type="button" class="btn btn--danger btn--sm" data-delete-id="${menu.id}">삭제</button>
       </span>
     `;
@@ -86,10 +88,23 @@
     renderMenus();
   }
 
+  function handleHideClick(event) {
+    const hideButton = event.target.closest("[data-hide-id]");
+    if (!hideButton) return;
+
+    const menuId = hideButton.dataset.hideId;
+    const menu = window.CafeUtils.findMenuById(menuId);
+    if (!menu) return;
+
+    window.CafeUtils.updateMenu(menuId, { isHidden: !menu.isHidden });
+    renderMenus();
+  }
+
   renderCategoryOptions();
   renderMenus();
 
   categoryFilterEl.addEventListener("change", renderMenus);
   searchInputEl.addEventListener("input", renderMenus);
   listBodyEl.addEventListener("click", handleDeleteClick);
+  listBodyEl.addEventListener("click", handleHideClick);
 })();

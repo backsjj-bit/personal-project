@@ -52,6 +52,10 @@ window.addEventListener("DOMContentLoaded", () => {
     const categoryId = categoryFilter.value;
 
     return CafeUtils.getMenusByCategory(categoryId).filter((menu) => {
+      if (menu.isHidden) {
+        return false;
+      }
+
       if (!keyword) {
         return true;
       }

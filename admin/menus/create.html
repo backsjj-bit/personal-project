@@ -44,8 +44,9 @@
         </label>
 
         <label class="menu-form__field">
-          <span>이미지 URL</span>
-          <input type="url" name="image" placeholder="https://..." />
+          <span>이미지 파일</span>
+          <input type="file" name="imageFile" id="image-file-input" accept="image/*" />
+          <img id="image-preview" class="menu-form__image-preview" alt="이미지 미리보기" hidden />
         </label>
 
         <label class="menu-form__field">
