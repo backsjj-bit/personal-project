@@ -130,6 +130,13 @@ document.getElementById('btn-checkout').addEventListener('click', async () => {
   const cart = getCart();
   if (cart.length === 0) return;
 
+  const currentUser = await getCurrentUser();
+  if (!currentUser) {
+    alert('로그인 후 주문할 수 있습니다.');
+    window.location.href = '/auth/login.html';
+    return;
+  }
+
   await createOrder(cart, {
     useCoupon: couponStampEl.checked,
     useSignupCoupon: couponSignupEl.checked,
