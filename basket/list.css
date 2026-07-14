@@ -195,6 +195,11 @@
   font-weight: 700;
 }
 
+.coupon-section[hidden],
+.coupon-option[hidden] {
+  display: none;
+}
+
 .coupon-hint {
   margin: 0;
   color: var(--color-text-muted);
